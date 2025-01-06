@@ -1,0 +1,6 @@
+pandoc: '3.2'
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  colombiAPI_vignette: colombiAPI_vignette.html
+last_built: 2025-01-06T15:25Z

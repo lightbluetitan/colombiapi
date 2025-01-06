@@ -1,0 +1,120 @@
+---
+title: "ColombiAPI: Exploring Colombia's Public Data with API-Colombia"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ColombiAPI: Exploring Colombia's Public Data with API-Colombia}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ColombiAPI)
+library(dplyr)
+
+```
+
+
+# Introduction 
+
+The `ColombiAPI` package provides a seamless interface to access diverse public data about `Colombia` through the `API-Colombia`, a RESTful API.
+The package enables users to explore various aspects of `Colombia`, including general information, geography, and cultural insights.
+It includes five API-related functions to retrieve data on topics such as `Colombia`'s general information, airports, departments, regions, and presidents.
+
+Additionally, `ColombiAPI` offers a built-in function to view the datasets available within the package.
+The package also includes curated datasets covering Bogota air stations, business and holiday dates, public schools, Colombian coffee exports,
+cannabis licenses, Medellin rainfall, and malls in Bogota, making it a comprehensive tool for exploring `Colombia`'s data.
+
+## Functions for API-Colombia
+
+The `ColombiAPI` package provides five primary functions to retrieve data from the `API-Colombia`,
+we'll show you how two of them work in this section:
+
+
+- `get_Colombia_info()`
+Retrieves general information about `Colombia`, including its capital, surface area, population, and languages.
+
+```{r colombia_info}
+
+get_Colombia_info()
+
+
+```
+
+
+-  `get_regions_list()`
+Retrieves information about `Colombia`'s regions, showcasing their unique characteristics.
+
+```{r colombia_regions}
+
+get_regions_list()
+
+
+```
+
+
+
+- `get_departments_list()`: Lists all the departments of `Colombia`, including their geographical information.
+
+
+- `get_presidents_list()`:  Provides a list of all presidents in `Colombia`'s history.
+
+
+ - `get_airports_list()`:  Get the List of Airports in `Colombia`.
+
+
+
+## Datasets Included in ColombiAPI
+
+In addition to API functions, `ColombiAPI` includes several preloaded datasets that provide valuable insights into various aspects of `Colombia`:
+
+- `Bogota_airstations_df`: A data frame containing coordinates of air quality monitoring stations in Bogota.
+
+- `Bogota_business_Date`: A Date object listing official business dates in Bogota. 
+
+- `Bogota_holidays_Date`: A Date object listing official holidays in Bogota. 
+
+- `Bogota_malls_tbl_df`: A tibble with detailed information about malls in Bogota. 
+
+- `Cannabis_Licenses_tbl_df`: A tibble containing data on cannabis licenses issued in Colombia. 
+
+- `Colombia_coffee_tbl_df`: A tibble with details of Colombian coffee export and import for the year 2016.
+
+- `Medellin_rain_tbl_df`: A tibble providing rainfall data for Medellin. 
+
+- `Tulua_Public_Schools_tbl_df`: A tibble with information on public schools in Tulua. 
+
+### Dataset Suffixes
+
+Each dataset in `ColombiAPI` is labeled with a `suffix` to indicate its type and structure:
+
+- `_df`: A standard data frame.
+
+- `_tbl_df`: A tibble, a modern version of a data frame with better formatting and functionality.
+
+- `_Date`: An object of type Date.
+
+## Viewing All Available Datasets 
+
+The `ColombiAPI` package includes a built-in function, `view_datasets()`, which allows users to view a comprehensive list of all datasets available in the package directly from the console:
+
+```{r view_datasets}
+
+view_datasets()
+
+```
+
+
+## Conclusion
+
+The `ColombiAPI` package offers a powerful set of tools for accessing and analyzing public data about Colombia.
+From exploring general information about the country to diving into specific datasets on topics like air quality, public schools, or coffee exports, `ColombiAPI` enables users to engage with Colombia's rich data landscape easily.
+For more detailed examples and use cases, refer to the full package documentation or explore the datasets using the built-in functions.
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
