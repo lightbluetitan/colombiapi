@@ -12,9 +12,7 @@ A data frame with 10 observations and 3 variables:
 }
 }
 \source{
-Originally taken from the SpatFD package version 0.0.1.
-Data provided by the Secretaria de Ambiente de Bogotá:
-Monitor network of air quality of Bogota \url{http://rmcab.ambientebogota.gov.co}
+Originally taken from the SpatFD package version 0.0.1
 }
 \usage{
 data(Bogota_airstations_df)

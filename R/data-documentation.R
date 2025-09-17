@@ -1,5 +1,5 @@
-# ColombiAPI - Access Colombia's Public Data via API-Colombia
-# Version 0.1.0
+# ColombiAPI - Access Colombian Data via APIs and Curated Datasets
+# Version 0.2.0
 # Copyright (C) 2025 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
@@ -31,9 +31,7 @@
 #'   \item{X}{Numeric value representing the X coordinate of the station.}
 #'   \item{Y}{Numeric value representing the Y coordinate of the station.}
 #' }
-#' @source Originally taken from the SpatFD package version 0.0.1.
-#' Data provided by the Secretaria de Ambiente de Bogotá:
-#' Monitor network of air quality of Bogota \url{http://rmcab.ambientebogota.gov.co}
+#' @source Originally taken from the SpatFD package version 0.0.1
 #' @usage data(Bogota_airstations_df)
 #' @export
 load("data/Bogota_airstations_df.rda")

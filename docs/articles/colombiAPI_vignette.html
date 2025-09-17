@@ -5,18 +5,17 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ColombiAPI: Exploring Colombia's Public Data with API-Colombia • ColombiAPI</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<title>ColombiAPI: Access Colombian Data via APIs and Curated Datasets • ColombiAPI</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="ColombiAPI: Exploring Colombia's Public Data with API-Colombia">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="ColombiAPI: Access Colombian Data via APIs and Curated Datasets">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ColombiAPI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +38,10 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/colombiAPI_vignette.html">ColombiAPI: Exploring Colombia's Public Data with API-Colombia</a></li>
+<li><a class="dropdown-item" href="../articles/colombiAPI_vignette.html">ColombiAPI: Access Colombian Data via APIs and Curated Datasets</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -60,7 +60,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>ColombiAPI: Exploring Colombia's Public Data with API-Colombia</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>ColombiAPI: Access Colombian Data via APIs and Curated Datasets</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/lightbluetitan/colombiapi/blob/HEAD/vignettes/colombiAPI_vignette.Rmd" class="external-link"><code>vignettes/colombiAPI_vignette.Rmd</code></a></small>
@@ -71,8 +71,6 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lightbluetitan/colombiapi" class="external-link">ColombiAPI</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
-<span><span class="co">#&gt;   object 'type_sum.accel' not found</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
@@ -81,91 +79,170 @@
 <span><span class="co">#&gt;     filter, lag</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <code>ColombiAPI</code> package provides a seamless interface to
-access diverse public data about <code>Colombia</code> through the
-<code>API-Colombia</code>, a RESTful API. The package enables users to
-explore various aspects of <code>Colombia</code>, including general
-information, geography, and cultural insights. It includes five
-API-related functions to retrieve data on topics such as
-<code>Colombia</code>’s general information, airports, departments,
-regions, and presidents.</p>
-<p>Additionally, <code>ColombiAPI</code> offers a built-in function to
-view the datasets available within the package. The package also
-includes curated datasets covering Bogota air stations, business and
-holiday dates, public schools, Colombian coffee exports, cannabis
-licenses, Medellin rainfall, and malls in Bogota, making it a
-comprehensive tool for exploring <code>Colombia</code>’s data.</p>
+<p>The <code>ColombiAPI</code> package provides a unified interface to
+access open data from the <strong>API-Colombia</strong>, <strong>World
+Bank API</strong>, <strong>Nager.Date API</strong>, and the <strong>REST
+Countries API</strong>, with a focus on <strong>Colombia</strong>. It
+allows users to retrieve up-to-date or historical information on topics
+such as geographic locations, cultural attractions, economic indicators,
+demographic data, national holidays, and key country-level details.</p>
+<p>In addition to API-access functions, the package includes a
+collection of curated datasets related to <strong>Colombia</strong>.
+These datasets cover a wide range of topics including air quality
+monitoring, education (public schools), business and holiday calendars,
+agricultural exports (coffee), regulatory information (cannabis
+licenses), climate data (Medellin rainfall), and urban development
+(Bogota shopping malls).</p>
+<p><code>ColombiAPI</code> is designed to support users working with
+data related to <strong>Colombia</strong> by integrating international
+RESTful APIs with Colombian-specific APIs and structured, reliable
+datasets from public, academic, and government sources into a single,
+easy-to-use R package.</p>
 <div class="section level3">
-<h3 id="functions-for-api-colombia">Functions for API-Colombia<a class="anchor" aria-label="anchor" href="#functions-for-api-colombia"></a>
+<h3 id="colombiapi-functions">ColombiAPI Functions<a class="anchor" aria-label="anchor" href="#colombiapi-functions"></a>
 </h3>
-<p>The <code>ColombiAPI</code> package provides five primary functions
-to retrieve data from the <code>API-Colombia</code>, we’ll show you how
-two of them work in this section:</p>
+<p>The <code>ColombiAPI</code> package provides several core functions
+to access real-time or historical information about
+<strong>Colombia</strong> from public APIs such as
+<strong>API-Colombia</strong>, <strong>World Bank API</strong>,
+<strong>Nager.Date</strong>, and the <strong>REST Countries
+API</strong>.</p>
+<p>Below is a list of the main functions included in the package:</p>
 <ul>
-<li>
-<code><a href="../reference/get_Colombia_info.html">get_Colombia_info()</a></code> Retrieves general information about
-<code>Colombia</code>, including its capital, surface area, population,
-and languages.</li>
+<li><p><code><a href="../reference/get_colombia_airports.html">get_colombia_airports()</a></code>: Get Colombia’s Airports
+from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_attractions.html">get_colombia_attractions()</a></code>: Get All Touristic
+Attractions of Colombia from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_child_mortality.html">get_colombia_child_mortality()</a></code>: Get Colombia’s
+Under-5 Mortality Rate from World Bank.</p></li>
+<li><p><code><a href="../reference/get_colombia_cities.html">get_colombia_cities()</a></code>: Get All Cities of Colombia
+from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_cpi.html">get_colombia_cpi()</a></code>: Get Colombia’s Consumer Price
+Index (2010 = 100) from World Bank.</p></li>
+<li><p><code><a href="../reference/get_colombia_departments.html">get_colombia_departments()</a></code>: Get Colombia’s
+Departments from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_energy_use.html">get_colombia_energy_use()</a></code>: Get Colombia’s Energy Use
+(kg of oil equivalent per capita) from World Bank.</p></li>
+<li><p><code>get_colombia_gdp function()</code>: Get Colombia’s GDP
+(current US$) from World Bank.</p></li>
+<li><p><code><a href="../reference/get_colombia_holidays.html">get_colombia_holidays()</a></code>: Get official public
+holidays in Colombia for a given year, e.g.,
+<code>get_colombia_holidays(2025)</code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_hospital_beds.html">get_colombia_hospital_beds()</a></code>: Get Colombia’s
+Hospital Beds (per 1,000 people) from World Bank.</p></li>
+<li><p><code><a href="../reference/get_colombia_invasive_species.html">get_colombia_invasive_species()</a></code>: Get Invasive
+Species of Colombia from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_life_expectancy.html">get_colombia_life_expectancy()</a></code>: Get Colombia’s Life
+Expectancy at Birth (Total, Years) from World Bank.</p></li>
+<li><p><code><a href="../reference/get_colombia_literacy_rate.html">get_colombia_literacy_rate()</a></code>: Get Colombia’s Adult
+Literacy Rate from World Bank.</p></li>
+<li><p><code><a href="../reference/get_colombia_native_communities.html">get_colombia_native_communities()</a></code>: Get Native
+Communities of Colombia from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_natural_areas.html">get_colombia_natural_areas()</a></code>: Get Natural Areas of
+Colombia from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_population.html">get_colombia_population()</a></code>: Get Colombia’s Total
+Population from World Bank.</p></li>
+<li><p><code><a href="../reference/get_colombia_presidents.html">get_colombia_presidents()</a></code>: Get Colombia’s Presidents
+from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_radios.html">get_colombia_radios()</a></code>: Get Radios of Colombia from
+API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_regions.html">get_colombia_regions()</a></code>: Get Colombia’s Regions from
+API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_typical_dishes.html">get_colombia_typical_dishes()</a></code>: Get Typical Dishes of
+Colombia from API Colombia.</p></li>
+<li><p><code><a href="../reference/get_colombia_unemployment.html">get_colombia_unemployment()</a></code>: Get Colombia’s
+Unemployment Rate (Total) from World Bank.</p></li>
+<li><p><code><a href="../reference/get_country_info_co.html">get_country_info_co()</a></code>: Get Country Information for
+Colombia from restcountries.</p></li>
+<li><p><code><a href="../reference/view_datasets_ColombiAPI.html">view_datasets_ColombiAPI()</a></code>: View available curated
+datasets included in ColombiAPI.</p></li>
 </ul>
+<p>These functions allow users to access high-quality and structured
+information on <strong>Colombia</strong>, which can be combined with
+tools like <strong>dplyr</strong> and <strong>ggplot2</strong> to
+support a wide range of data analysis, visualization, and research
+tasks. In the following sections, you’ll find examples on how to work
+with <code>ColombiAPI</code> in practical scenarios.</p>
+<div class="section level4">
+<h4 id="colombias-gdp-current-us-from-world-bank-2022---2017">Colombia’s GDP (Current US$) from World Bank 2022 - 2017<a class="anchor" aria-label="anchor" href="#colombias-gdp-current-us-from-world-bank-2022---2017"></a>
+</h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/get_Colombia_info.html">get_Colombia_info</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       name surface population timeZone       currency currencySymbol   region</span></span>
-<span><span class="co">#&gt; 1 Colombia 1141748   52235050    UTC-5 Colombian Peso              $ Americas</span></span></code></pre></div>
-<ul>
-<li>
-<code><a href="../reference/get_regions_list.html">get_regions_list()</a></code> Retrieves information about
-<code>Colombia</code>’s regions, showcasing their unique
-characteristics.</li>
-</ul>
+<span></span>
+<span><span class="va">colombia_gdp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_colombia_gdp.html">get_colombia_gdp</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">colombia_gdp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   indicator         country   year         value value_label    </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> GDP (current US$) Colombia  <span style="text-decoration: underline;">2</span>022 <span style="text-decoration: underline;">345</span>632<span style="text-decoration: underline;">492</span>851. 345,632,492,851</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> GDP (current US$) Colombia  <span style="text-decoration: underline;">2</span>021 <span style="text-decoration: underline;">318</span>524<span style="text-decoration: underline;">633</span>225. 318,524,633,225</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> GDP (current US$) Colombia  <span style="text-decoration: underline;">2</span>020 <span style="text-decoration: underline;">270</span>348<span style="text-decoration: underline;">342</span>541. 270,348,342,541</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> GDP (current US$) Colombia  <span style="text-decoration: underline;">2</span>019 <span style="text-decoration: underline;">323</span>031<span style="text-decoration: underline;">701</span>193. 323,031,701,193</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> GDP (current US$) Colombia  <span style="text-decoration: underline;">2</span>018 <span style="text-decoration: underline;">334</span>198<span style="text-decoration: underline;">218</span>098. 334,198,218,098</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> GDP (current US$) Colombia  <span style="text-decoration: underline;">2</span>017 <span style="text-decoration: underline;">311</span>866<span style="text-decoration: underline;">875</span>157. 311,866,875,157</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="colombias-life-expectancy-at-birth-from-world-bank-2022---2017">Colombia’s Life Expectancy at Birth from World Bank 2022 - 2017<a class="anchor" aria-label="anchor" href="#colombias-life-expectancy-at-birth-from-world-bank-2022---2017"></a>
+</h4>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/get_regions_list.html">get_regions_list</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   id      name</span></span>
-<span><span class="co">#&gt; 1  4  Amazonía</span></span>
-<span><span class="co">#&gt; 2  5    Andina</span></span>
-<span><span class="co">#&gt; 3  1    Caribe</span></span>
-<span><span class="co">#&gt; 4  6   Insular</span></span>
-<span><span class="co">#&gt; 5  3 Orinoquía</span></span>
-<span><span class="co">#&gt; 6  2  Pacífico</span></span></code></pre></div>
-<ul>
-<li><p><code><a href="../reference/get_departments_list.html">get_departments_list()</a></code>: Lists all the departments of
-<code>Colombia</code>, including their geographical
-information.</p></li>
-<li><p><code><a href="../reference/get_presidents_list.html">get_presidents_list()</a></code>: Provides a list of all
-presidents in <code>Colombia</code>’s history.</p></li>
-<li><p><code><a href="../reference/get_airports_list.html">get_airports_list()</a></code>: Get the List of Airports in
-<code>Colombia</code>.</p></li>
-</ul>
+<span><span class="va">colombia_life_expectancy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_colombia_life_expectancy.html">get_colombia_life_expectancy</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">colombia_life_expectancy</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   indicator                               country   year value</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>022  76.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>021  72.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>020  74.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>019  76.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>018  76.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>017  76.4</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="colombias-total-population-from-world-bank-2022---2017">Colombia’s Total Population from World Bank 2022 - 2017<a class="anchor" aria-label="anchor" href="#colombias-total-population-from-world-bank-2022---2017"></a>
+</h4>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">colombia_population</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_colombia_population.html">get_colombia_population</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">colombia_population</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   indicator         country   year    value value_label</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Population, total Colombia  <span style="text-decoration: underline;">2</span>022 51<span style="text-decoration: underline;">737</span>944 51,737,944 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Population, total Colombia  <span style="text-decoration: underline;">2</span>021 51<span style="text-decoration: underline;">188</span>173 51,188,173 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Population, total Colombia  <span style="text-decoration: underline;">2</span>020 50<span style="text-decoration: underline;">629</span>997 50,629,997 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Population, total Colombia  <span style="text-decoration: underline;">2</span>019 49<span style="text-decoration: underline;">907</span>985 49,907,985 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Population, total Colombia  <span style="text-decoration: underline;">2</span>018 49<span style="text-decoration: underline;">024</span>465 49,024,465 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Population, total Colombia  <span style="text-decoration: underline;">2</span>017 48<span style="text-decoration: underline;">131</span>078 48,131,078</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
-<h3 id="datasets-included-in-colombiapi">Datasets Included in ColombiAPI<a class="anchor" aria-label="anchor" href="#datasets-included-in-colombiapi"></a>
+<h3 id="monthly-average-rainfall-in-medellin">Monthly Average Rainfall in Medellin<a class="anchor" aria-label="anchor" href="#monthly-average-rainfall-in-medellin"></a>
 </h3>
-<p>In addition to API functions, <code>ColombiAPI</code> includes
-several preloaded datasets that provide valuable insights into various
-aspects of <code>Colombia</code>:</p>
-<ul>
-<li><p><code>Bogota_airstations_df</code>: A data frame containing
-coordinates of air quality monitoring stations in Bogota.</p></li>
-<li><p><code>Bogota_business_Date</code>: A Date object listing official
-business dates in Bogota.</p></li>
-<li><p><code>Bogota_holidays_Date</code>: A Date object listing official
-holidays in Bogota.</p></li>
-<li><p><code>Bogota_malls_tbl_df</code>: A tibble with detailed
-information about malls in Bogota.</p></li>
-<li><p><code>Cannabis_Licenses_tbl_df</code>: A tibble containing data
-on cannabis licenses issued in Colombia.</p></li>
-<li><p><code>Colombia_coffee_tbl_df</code>: A tibble with details of
-Colombian coffee export and import for the year 2016.</p></li>
-<li><p><code>Medellin_rain_tbl_df</code>: A tibble providing rainfall
-data for Medellin.</p></li>
-<li><p><code>Tulua_Public_Schools_tbl_df</code>: A tibble with
-information on public schools in Tulua.</p></li>
-</ul>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">Medellin_rain_tbl_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_rainfall <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">rainfall</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">month</span>, y <span class="op">=</span> <span class="va">mean_rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"steelblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Climatological Monthly Average Rainfall in Medellin"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Each point represents the long-term mean rainfall for that month, averaged across all years"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Month"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Mean Rainfall (mm)"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="colombiAPI_vignette_files/figure-html/colombia-rainfall-1.png" width="864"></p>
 <div class="section level4">
 <h4 id="dataset-suffixes">Dataset Suffixes<a class="anchor" aria-label="anchor" href="#dataset-suffixes"></a>
 </h4>
@@ -178,18 +255,33 @@ with better formatting and functionality.</p></li>
 <li><p><code>_Date</code>: An object of type Date.</p></li>
 </ul>
 </div>
+<div class="section level4">
+<h4 id="datasets-included-in-colombiapi">Datasets Included in ColombiAPI<a class="anchor" aria-label="anchor" href="#datasets-included-in-colombiapi"></a>
+</h4>
+<p>In addition to API functions, <code>ColombiAPI</code> includes
+several preloaded datasets that provide valuable insights into various
+aspects of <code>Colombia</code>:</p>
+<ul>
+<li><p><code>Bogota_airstations_df</code>: A data frame containing
+coordinates of air quality monitoring stations in Bogota.</p></li>
+<li><p><code>Bogota_business_Date</code>: A Date object listing official
+business dates in Bogota.</p></li>
+<li><p><code>Colombia_coffee_tbl_df</code>: A tibble with details of
+Colombian coffee export and import for the year 2016.</p></li>
+</ul>
+</div>
 </div>
 <div class="section level3">
 <h3 id="viewing-all-available-datasets">Viewing All Available Datasets<a class="anchor" aria-label="anchor" href="#viewing-all-available-datasets"></a>
 </h3>
 <p>The <code>ColombiAPI</code> package includes a built-in function,
-<code><a href="../reference/view_datasets.html">view_datasets()</a></code>, which allows users to view a comprehensive
-list of all datasets available in the package directly from the
-console:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code><a href="../reference/view_datasets_ColombiAPI.html">view_datasets_ColombiAPI()</a></code>, which allows users to view a
+comprehensive list of all datasets available in the package directly
+from the console:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/view_datasets.html">view_datasets</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Datasets available in the ColombiAPI package:</span></span>
+<span><span class="fu"><a href="../reference/view_datasets_ColombiAPI.html">view_datasets_ColombiAPI</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Datasets available in the 'ColombiAPI' package:</span></span>
 <span><span class="co">#&gt; [1] "Bogota_airstations_df"       "Bogota_business_Date"       </span></span>
 <span><span class="co">#&gt; [3] "Bogota_holidays_Date"        "Bogota_malls_tbl_df"        </span></span>
 <span><span class="co">#&gt; [5] "Cannabis_Licenses_tbl_df"    "Colombia_coffee_tbl_df"     </span></span>
@@ -198,14 +290,28 @@ console:</p>
 <div class="section level3">
 <h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h3>
-<p>The <code>ColombiAPI</code> package offers a powerful set of tools
-for accessing and analyzing public data about Colombia. From exploring
-general information about the country to diving into specific datasets
-on topics like air quality, public schools, or coffee exports,
-<code>ColombiAPI</code> enables users to engage with Colombia’s rich
-data landscape easily. For more detailed examples and use cases, refer
-to the full package documentation or explore the datasets using the
-built-in functions.</p>
+<p>The <code>ColombiAPI</code> package provides a unified and powerful
+interface for accessing both real-time data through public APIs and a
+collection of curated datasets about <strong>Colombia</strong>. By
+integrating multiple data sources — including <code>API-Colombia</code>
+for geography, culture, tourism, and government information, the
+<code>World Bank API</code> for economic and demographic indicators,
+<code>Nager.Date</code> for official holidays, and the
+<code>REST Countries API</code> for general country details — the
+package allows users to explore <strong>Colombia</strong> from multiple
+perspectives in a structured and consistent way.</p>
+<p>In addition to API-driven data, <code>ColombiAPI</code> offers
+preloaded open datasets related to Colombia, such as Bogotá air
+stations, public schools, business and holiday dates, coffee exports,
+cannabis licenses, Medellin rainfall, and malls in Bogota. This dual
+approach of combining live API data with curated datasets empowers users
+to analyze Colombia’s social, economic, environmental, and cultural
+landscape in greater depth.</p>
+<p>Designed to support reproducible research, education, policy
+analysis, and data journalism, <code>ColombiAPI</code> makes it possible
+to seamlessly integrate Colombian data into the R ecosystem, ensuring
+accessibility, reliability, and clarity for a wide range of
+applications.</p>
 <div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
 
 </div>
@@ -222,7 +328,7 @@ built-in functions.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

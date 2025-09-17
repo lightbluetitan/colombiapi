@@ -4,18 +4,18 @@
 \name{ColombiAPI}
 \alias{ColombiAPI}
 \alias{ColombiAPI-package}
-\title{ColombiAPI: Access Colombia's Public Data via API-Colombia}
+\title{ColombiAPI: Access Colombian Data via APIs and Curated Datasets}
 \description{
 {
-This package provides access to information about Colombia through the API-Colombia, a public RESTful API that enables users to obtain a variety of public information about Colombia,including general information, geography, and cultural insights.
+This package provides a comprehensive interface to access diverse public data about Colombia through multiple APIs and curated datasets. The package integrates four different APIs: API-Colombia for Colombian-specific data including geography, culture, tourism, and government information; World Bank API  for economic and demographic indicators; Nager.Date for public holidays; and REST Countries API for general country information.
 }
 }
 \details{
-ColombiAPI: Access Colombia's Public Data via API-Colombia
+ColombiAPI: Access Colombian Data via APIs and Curated Datasets
 
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Access Colombia's Public Data via API-Colombia.
+Access Colombian Data via APIs and Curated Datasets.
 }
 \seealso{
 {

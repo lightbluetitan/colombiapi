@@ -1,5 +1,5 @@
-# ColombiAPI - Access Colombia's Public Data via API-Colombia
-# Version 0.1.0
+# ColombiAPI - Access Colombian Data via APIs and Curated Datasets
+# Version 0.2.0
 # Copyright (C) 2025 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
@@ -16,17 +16,17 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-#' ColombiAPI: Access Colombia's Public Data via API-Colombia
+#' ColombiAPI: Access Colombian Data via APIs and Curated Datasets
 #'
 #' \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 #'
-#' Access Colombia's Public Data via API-Colombia.
+#' Access Colombian Data via APIs and Curated Datasets.
 #'
 #' @name ColombiAPI
 #' @aliases ColombiAPI-package
-#' @title ColombiAPI: Access Colombia's Public Data via API-Colombia
+#' @title ColombiAPI: Access Colombian Data via APIs and Curated Datasets
 #' @description {
-#' This package provides access to information about Colombia through the API-Colombia, a public RESTful API that enables users to obtain a variety of public information about Colombia,including general information, geography, and cultural insights.
+#' This package provides a comprehensive interface to access diverse public data about Colombia through multiple APIs and curated datasets. The package integrates four different APIs: API-Colombia for Colombian-specific data including geography, culture, tourism, and government information; World Bank API  for economic and demographic indicators; Nager.Date for public holidays; and REST Countries API for general country information.
 #' }
 #' @seealso {
 #' Useful links:

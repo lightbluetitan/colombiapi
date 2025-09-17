@@ -17,6 +17,30 @@ The `ColombiAPI` package depends on the `API-Colombia` for accessing data about 
 
 As per the author of `API-Colombia`, no attribution is required for using or distributing the data. However, we recommend reviewing the official [API-Colombia GitHub repository](https://github.com/Mteheran/api-colombia) for further details on the project and its MIT license, and the [API-Colombia website](https://api-colombia.com/) for more information about the data and usage terms.
 
+---
+
+1. **REST Countries API**  
+   An open-source project that offers information about countries worldwide, including demographics, geography, and regional groupings.  
+   This API is also publicly accessible and does not require authentication.  
+   Website: [https://restcountries.com/](https://restcountries.com/)
+   
+   
+2. **World Bank Open Data API**
+
+The **World Bank Open Data API** is a RESTful web service that provides access to a vast collection of international development indicators. It allows for real-time retrieval of economic, social, and environmental data, including metrics such as GDP, population, education, and poverty levels.
+
+This API is publicly accessible, requires **no authentication**, and returns results in either **JSON** or **XML** format. It supports filtering by country, indicator code, and year. It is widely used in data science, research, and educational contexts.
+
+
+- **API documentation**: [https://datahelpdesk.worldbank.org/knowledgebase/articles/889392](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392)
+- **License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)   
+   
+   
+3.- **API: Nager.Date**
+- Website: [https://date.nager.at/Api](https://date.nager.at/Api)
+- License: MIT License
+- Notes: The API and its source code are licensed under the MIT License. No authentication is required for the public API.
+Offline or commercial usage (e.g., via Docker or NuGet packages) may be subject to separate licensing, but this does not affect the MIT licensing of the open source API.
 
 
 ## Note

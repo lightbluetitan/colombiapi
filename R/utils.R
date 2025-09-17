@@ -1,5 +1,5 @@
-# ColombiAPI - Access Colombia's Public Data via API Colombia
-# Version 0.1.0
+# ColombiAPI - Access Colombian Data via APIs and Curated Datasets
+# Version 0.2.0
 # Copyright (C) 2025 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,71 @@
 
 
 utils::globalVariables(c(
-  # Variables of the get_airports_list function
-  "id", "name", "iataCode", "oaciCode", "type", "longitude", "latitude",
+  # Variables of the get_country_info_co function
+  "name_common", "name_official", "region", "subregion", "capital", "area", "population","languages",
 
-  # Variables of the get_Colombia_info function
-  "name", "surface", "population", "timeZone", "currency", "currencySymbolr", "region",
+  # Variables of the get_colombia_regions function
+  "id", "name", "description",
 
+  # Variables of the get_colombia_presidents function
+  "id", "name", "last_name", "political_party","start_period_date","end_period_date",
 
-  # Variables of the get_departments_list function
-  "id", "name", "surface", "population",
+  # Variables of the get_colombia_departments function
+  "id", "name", "capital", "surface","population","municipalities","phone_prefix","region_id",
 
-  # Variables of the get_presidents_list function
-  "id", "name", "lastName", "startPeriodDate","endPeriodDate","politicalParty",
+  # Variables of the get_colombia_airports function
+  "id", "name", "iata_code", "oaci_code", "type", "city", "department", "longitude", "latitude",
 
-  # Variables of the get_regions_list function
-  "id", "name"
+  # Variables of the get_colombia_cities function
+  "id", "name",
+
+  # Variables of the get_colombia_attractions function
+  "id", "name", "description", "latitude","longitude","cityId",
+
+  # Variables of the get_colombia_natural_areas function
+  "id", "areaGroupId", "categoryNaturalAreaId", "name","departmentId","daneCode","landArea",
+
+  # Variables of the get_colombia_invasive_species function
+  "id", "name", "scientificName", "commonNames","impact","manage","riskLevel",
+
+  # Variables of the get_colombia_native_communities function
+  "id", "name", "description", "languages",
+
+  # Variables of the get_colombia_radios function
+  "id", "name", "frequency", "band",
+
+  # Variables of the get_colombia_typical_dishes function
+  "id", "name", "description",
+
+  # Variables of the get_colombia_holidays function
+  "date", "local_name", "name",
+
+  # Variables of the get_colombia_child_mortality function
+  "indicator", "country", "year", "value",
+
+  # Variables of the get_colombia_cpi function
+  "indicator", "country", "year", "value",
+
+  # Variables of the get_colombia_energy_use function
+  "indicator", "country", "year", "value",
+
+  # Variables of the get_colombia_gdp function
+  "indicator", "country", "year", "value", "value_label",
+
+  # Variables of the get_colombia_hospital_beds function
+  "indicator", "country", "year", "value",
+
+  # Variables of the get_colombia_life_expectancy function
+  "indicator", "country", "year", "value",
+
+  # Variables of the get_colombia_literacy_rate function
+  "indicator", "country", "year", "value",
+
+  # Variables of the get_colombia_population function
+  "indicator", "country", "year", "value", "value_label",
+
+  # Variables of the get_colombia_unemployment function
+  "indicator", "country", "year", "value"
 
 
 ))

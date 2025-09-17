@@ -1,19 +1,30 @@
 Package: ColombiAPI
 Type: Package
-Title: Access Colombia's Public Data via API-Colombia
-Version: 0.1.0
+Title: Access Colombian Data via APIs and Curated Datasets
+Version: 0.2.0
 Maintainer: Renzo Caceres Rossi <arenzocaceresrossi@gmail.com>
-Description: ColombiAPI provides a seamless interface to access diverse public data about Colombia through the API Colombia, a RESTful API.  
-    The package enables users to explore various aspects of Colombia, including general information, geography, and cultural insights.  
-    It includes five API-related functions to retrieve data on topics such as Colombia's general information, airports, departments, regions, and presidents.  
-    Additionally, ColombiAPI offers a built-in function to view the datasets available within the package.  
-    The package also includes curated datasets covering Bogota air stations, business and holiday dates, public schools, Colombian coffee exports,  
-    cannabis licenses, Medellin rainfall, and malls in Bogota, making it a comprehensive tool for exploring Colombia's data.  
+Description: Provides a comprehensive interface to access diverse public data about
+    Colombia through multiple APIs and curated datasets. The package integrates
+    four different APIs: 'API-Colombia' for Colombian-specific data including
+    geography, culture, tourism, and government information; 'World Bank API' 
+    for economic and demographic indicators; 'Nager.Date' for public holidays;
+    and 'REST Countries API' for general country information. The package enables
+    users to explore various aspects of Colombia such as geographic locations,
+    cultural attractions, economic indicators, demographic data, and public
+    holidays. Additionally, 'ColombiAPI' includes curated datasets covering
+    Bogota air stations, business and holiday dates, public schools, Colombian
+    coffee exports, cannabis licenses, Medellin rainfall, and malls in Bogota,
+    making it a comprehensive tool for exploring Colombia's multifaceted data
+    landscape. For more information on the APIs, see: 
+    'API-Colombia' <https://api-colombia.com/>,
+    'Nager.Date' <https://date.nager.at/Api>, 
+    'World Bank API' <https://datahelpdesk.worldbank.org/knowledgebase/articles/889392>, 
+    and 'REST Countries API' <https://restcountries.com/>.
 License: GPL-3
-URL: https://github.com/lightbluetitan/colombiapi
-BugReports: https://github.com/lightbluetitan/colombiapi/issues
+Depends: R (>= 4.1.0)
+URL: https://github.com/lightbluetitan/colombiapi, https://lightbluetitan.github.io/colombiapi/
+BugReports: https://github.com/lightbluetitan/colombiapi/issues 
 Encoding: UTF-8
-LazyData: true
 Suggests:
     ggplot2,
     testthat (>= 3.0.0),
@@ -23,11 +34,16 @@ Imports:
     httr,
     jsonlite,
     dplyr,
-    magrittr
-Authors@R: person(given = c("Renzo", "Caceres"),
-                  family = "Rossi",
-                  role = c("aut", "cre"),
-                  email = "arenzocaceresrossi@gmail.com")
+    scales,
+    tibble
+Authors@R: 
+    person(
+        given = "Renzo",
+        family = "Caceres Rossi",
+        role = c("aut", "cre"),
+        email = "arenzocaceresrossi@gmail.com",
+        comment = c(ORCID = "0009-0005-0744-854X")
+    )
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 VignetteBuilder: knitr
