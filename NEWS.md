@@ -1,3 +1,40 @@
+# ColombiAPI 0.3.0
+
+## Breaking Changes
+
+This release significantly expands the scope of `ColombiAPI` with **12 new curated datasets**.  
+
+These additions cover diverse domains such as **indigenous languages, education, biodiversity, digital transformation, mobility, tourism, connectivity, and economic projections**.  
+
+### Newly Added Datasets
+
+- `indigenous_vocabulary_df`: Comparative Vocabulary for Colombia's Indigenous Languages  
+
+- `admitted_students_df`: Admitted Students to the Science Faculty, UNAL (2013-I)  
+
+- `school_levels_df`: Departments by Levels of Schools in Colombia  
+
+- `dead_lianas_df`: Mortality of lianas (vines) in tropical forests 
+
+- `municipalities_tbl_df`: Municipalities of Colombia 
+
+- `Bucaramanga_wifi_tbl_df`: WiFi Connectivity Zones in Bucaramanga 
+
+- `Cartagena_wifi_tbl_df`: Connected Devices in WiFi Zones of Cartagena 
+
+- `digital_graduates_tbl_df`: "Advancing in Digital" Program Graduates 
+
+- `vehicle_count_tbl_df`: Vehicle Count: Cars and Motorcycles    
+
+- `foreign_visitors_tbl_df`: Non-Resident Foreign Visitors to Colombia 
+
+- `digital_centers_tbl_df`: Digital Centers in Sucre 
+
+- `gdp_departments_tbl_df`: Departmental GDP Projection   
+
+
+---
+
 # ColombiAPI 0.2.0
 
 ## Breaking Changes

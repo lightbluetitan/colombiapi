@@ -23,11 +23,12 @@ library(ggplot2)
 
 # Introduction 
 
-The `ColombiAPI` package provides a unified interface to access open data from the **API-Colombia**, **World Bank API**, **Nager.Date API**, and the **REST Countries API**, with a focus on **Colombia**. It allows users to retrieve up-to-date or historical information on topics such as geographic locations, cultural attractions, economic indicators, demographic data, national holidays, and key country-level details.
+The `ColombiAPI` package provides a comprehensive interface to access diverse public data about **Colombia** through multiple APIs and curated datasets. The package integrates four different APIs: **API-Colombia** for Colombian-specific data including geography, culture, tourism, and government information; **World Bank API** for economic and demographic indicators; **Nager.Date API** for public holidays; and **REST Countries API** for general country information. This allows users to retrieve up-to-date or historical information on topics such as geographic locations, cultural attractions, economic indicators, demographic data, and public holidays.
 
-In addition to API-access functions, the package includes a collection of curated datasets related to **Colombia**. These datasets cover a wide range of topics including air quality monitoring, education (public schools), business and holiday calendars, agricultural exports (coffee), regulatory information (cannabis licenses), climate data (Medellin rainfall), and urban development (Bogota shopping malls).
+In addition to API-access functions, the package includes curated datasets covering a wide range of topics, including **Bogota** air stations, business and holiday dates, public schools, Colombian coffee exports, cannabis licenses, **Medellin** rainfall, malls in **Bogota**, indigenous languages, student admissions and school statistics, forest liana mortality, municipal and regional data, connectivity and digital infrastructure, program graduates, vehicle counts, international visitors, and GDP projections. These datasets provide a rich and multifaceted view of Colombian social, economic, environmental, and technological information.
 
 `ColombiAPI` is designed to support users working with data related to **Colombia** by integrating international RESTful APIs with Colombian-specific APIs and structured, reliable datasets from public, academic, and government sources into a single, easy-to-use R package.
+
 
 ## ColombiAPI Functions
 
@@ -176,9 +177,9 @@ view_datasets_ColombiAPI()
 
 ## Conclusion
 
-The `ColombiAPI` package provides a unified and powerful interface for accessing both real-time data through public APIs and a collection of curated datasets about **Colombia**. By integrating multiple data sources — including `API-Colombia` for geography, culture, tourism, and government information, the `World Bank API` for economic and demographic indicators, `Nager.Date` for official holidays, and the `REST Countries API` for general country details — the package allows users to explore **Colombia** from multiple perspectives in a structured and consistent way.
+The `ColombiAPI` package provides a comprehensive and powerful interface for accessing both real-time data through public APIs and a wide range of curated datasets about **Colombia**. By integrating multiple data sources — including **API-Colombia** for Colombian-specific data on geography, culture, tourism, and government information; **World Bank API** for economic and demographic indicators; **Nager.Date API** for public holidays; and **REST Countries API** for general country information — the package allows users to explore **Colombia** from multiple perspectives in a structured and consistent way.
 
-In addition to API-driven data, `ColombiAPI` offers preloaded open datasets related to Colombia, such as Bogotá air stations, public schools, business and holiday dates, coffee exports, cannabis licenses, Medellin rainfall, and malls in Bogota. This dual approach of combining live API data with curated datasets empowers users to analyze Colombia’s social, economic, environmental, and cultural landscape in greater depth.
+In addition to API-driven data, `ColombiAPI` offers preloaded curated datasets covering diverse topics such as **Bogota** air stations, business and holiday dates, public schools, Colombian coffee exports, cannabis licenses, **Medellin** rainfall, malls in **Bogota**, indigenous languages, student admissions and school statistics, forest liana mortality, municipal and regional data, connectivity and digital infrastructure, program graduates, vehicle counts, international visitors, and GDP projections. This dual approach of combining live API data with curated datasets empowers users to analyze Colombia’s social, economic, environmental, technological, and cultural landscape in greater depth.
 
 Designed to support reproducible research, education, policy analysis, and data journalism, `ColombiAPI` makes it possible to seamlessly integrate Colombian data into the R ecosystem, ensuring accessibility, reliability, and clarity for a wide range of applications.
 
