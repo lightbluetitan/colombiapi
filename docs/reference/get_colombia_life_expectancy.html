@@ -11,7 +11,7 @@ The indicator used is SP.DYN.LE00.IN."><meta property="og:image" content="https:
 
     <a class="navbar-brand me-2" href="../index.html">ColombiAPI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,11 +66,12 @@ The indicator used is <code>SP.DYN.LE00.IN</code>.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function sends a GET request to the World Bank API.
 If the API request fails or returns an error status code,
-the function returns <code>NULL</code> with an informative message.</p>
+the function returns an empty tibble with the expected structure,
+instead of NULL, to ensure CRAN compatibility in offline checks.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>Requires internet connection.</p>
+    <p>Requires internet connection for real data.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -79,9 +80,19 @@ the function returns <code>NULL</code> with an informative message.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">get_colombia_life_expectancy</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span>  <span class="va">life_expectancy_data</span> <span class="op">&lt;-</span> <span class="fu">get_colombia_life_expectancy</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">life_expectancy_data</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   indicator                               country   year value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>022  76.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>021  72.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>020  74.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>019  76.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>018  76.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Life expectancy at birth, total (years) Colombia  <span style="text-decoration: underline;">2</span>017  76.4</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

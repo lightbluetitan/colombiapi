@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ColombiAPI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,24 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.0" id="colombiapi-030">ColombiAPI 0.3.0<a class="anchor" aria-label="anchor" href="#colombiapi-030"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.1" id="colombiapi-031">ColombiAPI 0.3.1<a class="anchor" aria-label="anchor" href="#colombiapi-031"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-1"></a></h3>
+<div class="section level4">
+<h4 id="test-corrections-for-cran-compliance-0-3-1">Test Corrections for CRAN Compliance<a class="anchor" aria-label="anchor" href="#test-corrections-for-cran-compliance-0-3-1"></a></h4>
+<ul><li><p><strong>Fixed <code><a href="../reference/get_colombia_literacy_rate.html">get_colombia_literacy_rate()</a></code> tests</strong>: Corrected data type expectations for the <code>value</code> column from <code>integer</code> to <code>numeric</code>. The World Bank API returns literacy rates as decimal percentages (e.g., 95.68%), which are naturally of type <code>numeric</code>/<code>double</code>, not <code>integer</code>.</p></li>
+<li>
+<p><strong>Fixed <code><a href="../reference/get_colombia_life_expectancy.html">get_colombia_life_expectancy()</a></code> tests</strong>:</p>
+<ul><li>Added <code>skip_on_cran()</code> to all tests to properly handle offline environments during CRAN checks</li>
+<li>Improved error handling by adding <code>User-Agent</code> headers to HTTP requests</li>
+<li>Added explicit <code>NULL</code> checks before structure validation to prevent test failures</li>
+<li>Enhanced robustness of API error handling with better <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> implementation</li>
+</ul></li>
+</ul></div>
+</div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="colombiapi-030">ColombiAPI 0.3.0<a class="anchor" aria-label="anchor" href="#colombiapi-030"></a></h2><p class="text-muted">CRAN release: 2025-09-29</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-3-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-0"></a></h3>
 <p>This release significantly expands the scope of <code>ColombiAPI</code> with <strong>12 new curated datasets</strong>.</p>

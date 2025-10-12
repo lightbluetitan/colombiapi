@@ -1,5 +1,5 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.0
+# Version 0.3.1
 # Copyright (C) 2025 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify

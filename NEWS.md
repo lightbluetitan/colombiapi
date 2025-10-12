@@ -1,3 +1,17 @@
+# ColombiAPI 0.3.1
+
+## Bug Fixes
+
+### Test Corrections for CRAN Compliance
+
+- **Fixed `get_colombia_literacy_rate()` tests**: Corrected data type expectations for the `value` column from `integer` to `numeric`. The World Bank API returns literacy rates as decimal percentages (e.g., 95.68%), which are naturally of type `numeric`/`double`, not `integer`.
+
+- **Fixed `get_colombia_life_expectancy()` tests**: 
+  - Added `skip_on_cran()` to all tests to properly handle offline environments during CRAN checks
+  - Improved error handling by adding `User-Agent` headers to HTTP requests
+  - Added explicit `NULL` checks before structure validation to prevent test failures
+  - Enhanced robustness of API error handling with better `tryCatch()` implementation
+
 # ColombiAPI 0.3.0
 
 ## Breaking Changes

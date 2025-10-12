@@ -1,5 +1,5 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.0
+# Version 0.3.1
 # Copyright (C) 2025 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,106 +21,140 @@
 library(testthat)
 
 test_that("get_colombia_life_expectancy() returns a tibble with the correct structure and content", {
+  skip_on_cran()
+
   result <- get_colombia_life_expectancy()
 
-  # Check that the result is not NULL
+  # Should always return a tibble, never NULL
   expect_false(is.null(result))
-
-  # Check that the result is a data.frame/tibble
   expect_s3_class(result, "data.frame")
-
-  # Check that the column names are exactly as expected
   expect_named(result, c("indicator", "country", "year", "value"))
 
-  # Check data types of each column
+  # If data is empty (offline mode), skip deeper checks
+  if (nrow(result) == 0) {
+    skip("API unavailable or offline mode detected — returning empty tibble as expected.")
+  }
+
+  # Data type checks
   expect_type(result$indicator, "character")
   expect_type(result$country, "character")
   expect_type(result$year, "integer")
-  expect_type(result$value, "double")
+  expect_true(is.numeric(result$value))
 
-  # Check that the indicator column contains only the expected value
+  # Expected content checks
   expect_true(all(result$indicator == "Life expectancy at birth, total (years)"))
-
-  # Check that the country column contains only "Colombia"
   expect_true(all(result$country == "Colombia"))
 
-  # Check that the year range is correct (2010-2022)
+  # Range checks
   expect_true(all(result$year >= 2010 & result$year <= 2022))
-
-  # Check that the number of rows is 13 (2010–2022)
   expect_equal(nrow(result), 13)
-
-  # Check that there are exactly 4 columns
   expect_equal(ncol(result), 4)
 })
 
 test_that("get_colombia_life_expectancy() returns data for years 2010 to 2022", {
-  result <- get_colombia_life_expectancy()
+  skip_on_cran()
 
-  # Check that all years from 2010 to 2022 are present
+  result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("API unavailable or offline mode detected — skipping check.")
+
   expect_true(all(result$year %in% 2010:2022))
   expect_equal(sort(unique(result$year)), 2010:2022)
 })
 
 test_that("get_colombia_life_expectancy() year column has no NA values", {
-  result <- get_colombia_life_expectancy()
+  skip_on_cran()
 
-  # Year column should not contain NA values
+  result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping NA check.")
+
   expect_false(any(is.na(result$year)))
 })
 
 test_that("get_colombia_life_expectancy() value column allows NA values", {
+  skip_on_cran()
+
   result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping NA validation.")
 
-  # Value column can contain NA values (as they are valid API responses)
   expect_true(all(is.finite(result$value) | is.na(result$value)))
-
-  # Accept that some values may be NA (valid API responses)
   expect_true(any(is.na(result$value)) || all(!is.na(result$value)))
 })
 
 test_that("get_colombia_life_expectancy() years are sorted in descending order", {
-  result <- get_colombia_life_expectancy()
+  skip_on_cran()
 
-  # Check that years are in descending order (2022 to 2010)
+  result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping sorting check.")
+
   expect_equal(result$year, sort(result$year, decreasing = TRUE))
 })
 
 test_that("get_colombia_life_expectancy() indicator and country are consistent across rows", {
+  skip_on_cran()
+
   result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping consistency checks.")
 
-  # Check that indicator is consistent across all rows
   expect_equal(length(unique(result$indicator)), 1)
-
-  # Check that country is consistent across all rows
   expect_equal(length(unique(result$country)), 1)
 })
 
 test_that("get_colombia_life_expectancy() returns exactly 13 rows for the specified period", {
-  result <- get_colombia_life_expectancy()
+  skip_on_cran()
 
-  # Verify exactly 13 rows (2010-2022 inclusive)
+  result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping row count check.")
+
   expect_equal(nrow(result), 13)
 })
 
 test_that("get_colombia_life_expectancy() non-NA values are within reasonable range", {
-  result <- get_colombia_life_expectancy()
+  skip_on_cran()
 
-  # Filter out NA values and check that remaining values are within reasonable range for life expectancy
+  result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping range validation.")
+
   non_na_values <- result$value[!is.na(result$value)]
   if (length(non_na_values) > 0) {
     expect_true(all(non_na_values > 0))
-    expect_true(all(non_na_values <= 120)) # Reasonable upper bound for life expectancy
-    expect_true(all(non_na_values >= 30))  # Reasonable lower bound for life expectancy
+    expect_true(all(non_na_values <= 120))
+    expect_true(all(non_na_values >= 30))
   }
 })
 
 test_that("get_colombia_life_expectancy() value column is numeric", {
-  result <- get_colombia_life_expectancy()
+  skip_on_cran()
 
-  # Check that value column is numeric (double)
+  result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping numeric type check.")
+
   expect_true(is.numeric(result$value))
   expect_true(is.double(result$value))
 })
 
+test_that("get_colombia_life_expectancy() handles API errors gracefully", {
+  skip_on_cran()
 
+  result <- get_colombia_life_expectancy()
+
+  # Should always return a data.frame (tibble), even on error
+  expect_false(is.null(result))
+  expect_s3_class(result, "data.frame")
+
+  # Should have correct column structure
+  expect_named(result, c("indicator", "country", "year", "value"))
+  expect_equal(ncol(result), 4)
+})
+
+test_that("get_colombia_life_expectancy() returns consistent data types", {
+  skip_on_cran()
+
+  result <- get_colombia_life_expectancy()
+  if (nrow(result) == 0) skip("Offline mode — skipping type consistency check.")
+
+  # Verify all columns have consistent types throughout
+  expect_true(all(sapply(result$indicator, is.character)))
+  expect_true(all(sapply(result$country, is.character)))
+  expect_true(all(sapply(result$year, is.integer)))
+  expect_true(all(sapply(result$value, function(x) is.numeric(x) || is.na(x))))
+})

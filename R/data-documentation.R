@@ -1,5 +1,5 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.0
+# Version 0.3.1
 # Copyright (C) 2025 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
@@ -365,6 +365,8 @@ load("data/school_levels_df.rda")
 NULL
 
 
+
+
 #' Mortality of lianas (vines) in tropical forests
 #'
 #' This dataset, 'dead_lianas_df', is a data frame containing information on the mortality
@@ -411,15 +413,15 @@ NULL
 #'   \item{AET}{Actual evapotranspiration (integer)}
 #'   \item{BasAre}{Basal area (numeric)}
 #'   \item{BasAre5_10}{Basal area of trees 5–10 cm DBH (numeric)}
-#'   \item{BasAre10}{Basal area of trees ≥10 cm DBH (numeric)}
-#'   \item{Ind10}{Number of individuals ≥10 cm DBH (integer)}
-#'   \item{Ind5}{Number of individuals ≥5 cm DBH (numeric)}
+#'   \item{BasAre10}{Basal area of trees \eqn{\ge}{>=} 10 cm DBH (numeric)}
+#'   \item{Ind10}{Number of individuals \eqn{\ge}{>=} 10 cm DBH (integer)}
+#'   \item{Ind5}{Number of individuals \eqn{\ge}{>=} 5 cm DBH (numeric)}
 #'   \item{Ind5_10}{Number of individuals 5–10 cm DBH (numeric)}
 #'   \item{Ind10_15}{Number of individuals 10–15 cm DBH (integer)}
 #'   \item{Ind15_20}{Number of individuals 15–20 cm DBH (integer)}
 #'   \item{Ind20_25}{Number of individuals 20–25 cm DBH (integer)}
 #'   \item{Ind25_30}{Number of individuals 25–30 cm DBH (integer)}
-#'   \item{Ind30}{Number of individuals ≥30 cm DBH (integer)}
+#'   \item{Ind30}{Number of individuals \eqn{\ge}{>=} 30 cm DBH (integer)}
 #'   \item{TreeHei}{Tree height (numeric)}
 #'   \item{MedHei}{Median tree height (numeric)}
 #'   \item{MaxHei}{Maximum tree height (numeric)}
@@ -440,6 +442,8 @@ NULL
 #' @export
 load("data/dead_lianas_df.rda")
 NULL
+
+
 
 
 
