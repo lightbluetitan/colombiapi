@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,97 +17,68 @@
 
 # get_colombia_hospital_beds
 
+
 library(testthat)
 
-test_that("get_colombia_hospital_beds() returns a tibble with the correct structure and content", {
-  result <- get_colombia_hospital_beds()
+beds_data <- get_colombia_hospital_beds()
 
-  # Check that the result is not NULL
-  expect_false(is.null(result))
+test_that("get_colombia_hospital_beds returns valid tibble structure", {
+  skip_if(is.null(beds_data), "Function returned NULL")
 
-  # Check that the result is a data.frame/tibble
-  expect_s3_class(result, "data.frame")
+  expect_s3_class(beds_data, "tbl_df")
+  expect_s3_class(beds_data, "data.frame")
 
-  # Check that the column names are exactly as expected
-  expect_named(result, c("indicator", "country", "year", "value"))
+  expect_equal(ncol(beds_data), 4)
+  expect_equal(nrow(beds_data), 13)
 
-  # Check data types of each column
-  expect_type(result$indicator, "character")
-  expect_type(result$country, "character")
-  expect_type(result$year, "integer")
-  expect_type(result$value, "double")
-
-  # Check that the indicator column contains only the expected value
-  expect_true(all(result$indicator == "Hospital beds (per 1,000 people)"))
-
-  # Check that the country column contains only "Colombia"
-  expect_true(all(result$country == "Colombia"))
-
-  # Check that the year range is correct (2010-2022)
-  expect_true(all(result$year >= 2010 & result$year <= 2022))
-
-  # Check that the number of rows is 13 (2010–2022)
-  expect_equal(nrow(result), 13)
-
-  # Check that there are exactly 4 columns
-  expect_equal(ncol(result), 4)
+  expect_equal(names(beds_data), c("indicator", "country", "year", "value"))
 })
 
-test_that("get_colombia_hospital_beds() returns data for years 2010 to 2022", {
-  result <- get_colombia_hospital_beds()
+test_that("get_colombia_hospital_beds returns correct column types", {
+  skip_if(is.null(beds_data), "Function returned NULL")
 
-  # Check that all years from 2010 to 2022 are present
-  expect_true(all(result$year %in% 2010:2022))
-  expect_equal(sort(unique(result$year)), 2010:2022)
+  expect_type(beds_data$indicator, "character")
+  expect_type(beds_data$country, "character")
+  expect_type(beds_data$year, "integer")
+  expect_true(is.numeric(beds_data$value))
 })
 
-test_that("get_colombia_hospital_beds() year column has no NA values", {
-  result <- get_colombia_hospital_beds()
+test_that("get_colombia_hospital_beds returns correct indicator and country", {
+  skip_if(is.null(beds_data), "Function returned NULL")
 
-  # Year column should not contain NA values
-  expect_false(any(is.na(result$year)))
+  expect_true(all(!is.na(beds_data$indicator)))
+  expect_true(all(!is.na(beds_data$country)))
+
+  expect_true(all(
+    beds_data$indicator == "Hospital beds (per 1,000 people)"
+  ))
+
+  expect_true(all(beds_data$country == "Colombia"))
 })
 
-test_that("get_colombia_hospital_beds() value column allows NA values", {
-  result <- get_colombia_hospital_beds()
+test_that("get_colombia_hospital_beds year column is complete and valid", {
+  skip_if(is.null(beds_data), "Function returned NULL")
 
-  # Value column can contain NA values (as they are valid API responses)
-  expect_true(all(is.finite(result$value) | is.na(result$value)))
-
-  # Accept that some values may be NA (as shown in the sample data)
-  expect_true(any(is.na(result$value)) || all(!is.na(result$value)))
+  expect_equal(sort(beds_data$year), 2010:2022)
+  expect_equal(length(unique(beds_data$year)), 13)
 })
 
-test_that("get_colombia_hospital_beds() years are sorted in descending order", {
-  result <- get_colombia_hospital_beds()
+test_that("get_colombia_hospital_beds value column handles NA and valid values", {
+  skip_if(is.null(beds_data), "Function returned NULL")
 
-  # Check that years are in descending order (2022 to 2010)
-  expect_equal(result$year, sort(result$year, decreasing = TRUE))
-})
+  # Puede haber NA (API real)
+  expect_true(any(is.na(beds_data$value)))
 
-test_that("get_colombia_hospital_beds() indicator and country are consistent across rows", {
-  result <- get_colombia_hospital_beds()
+  non_na_values <- beds_data$value[!is.na(beds_data$value)]
 
-  # Check that indicator is consistent across all rows
-  expect_equal(length(unique(result$indicator)), 1)
-
-  # Check that country is consistent across all rows
-  expect_equal(length(unique(result$country)), 1)
-})
-
-test_that("get_colombia_hospital_beds() returns exactly 13 rows for the specified period", {
-  result <- get_colombia_hospital_beds()
-
-  # Verify exactly 13 rows (2010-2022 inclusive)
-  expect_equal(nrow(result), 13)
-})
-
-test_that("get_colombia_hospital_beds() non-NA values are positive numbers", {
-  result <- get_colombia_hospital_beds()
-
-  # Filter out NA values and check that remaining values are positive
-  non_na_values <- result$value[!is.na(result$value)]
   if (length(non_na_values) > 0) {
     expect_true(all(non_na_values > 0))
+    expect_true(all(is.finite(non_na_values)))
   }
+})
+
+test_that("get_colombia_hospital_beds returns no duplicate rows", {
+  skip_if(is.null(beds_data), "Function returned NULL")
+
+  expect_equal(nrow(beds_data), nrow(unique(beds_data)))
 })

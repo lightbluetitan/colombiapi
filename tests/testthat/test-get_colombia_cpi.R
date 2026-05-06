@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,76 +20,47 @@
 
 library(testthat)
 
-test_that("get_colombia_cpi() returns a tibble with correct structure and types", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
+cpi_data <- get_colombia_cpi()
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("indicator", "country", "year", "value"))
-  expect_equal(ncol(result), 4)
-  expect_type(result$indicator, "character")
-  expect_type(result$country, "character")
-  expect_type(result$year, "integer")
-  expect_type(result$value, "double")
-  expect_gt(nrow(result), 0)
+test_that("get_colombia_cpi returns valid tibble structure", {
+  skip_if(is.null(cpi_data), "Function returned NULL")
+  expect_s3_class(cpi_data, "tbl_df")
+  expect_s3_class(cpi_data, "data.frame")
+  expect_equal(ncol(cpi_data), 4)
+  expect_equal(nrow(cpi_data), 13)
+  expect_equal(names(cpi_data), c("indicator", "country", "year", "value"))
 })
 
-test_that("get_colombia_cpi() returns correct indicator and country", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_true(all(result$indicator == "Consumer price index (2010 = 100)"))
-  expect_true(all(result$country == "Colombia"))
+test_that("get_colombia_cpi returns correct column types", {
+  skip_if(is.null(cpi_data), "Function returned NULL")
+  expect_type(cpi_data$indicator, "character")
+  expect_type(cpi_data$country, "character")
+  expect_type(cpi_data$year, "integer")
+  expect_true(is.numeric(cpi_data$value))
 })
 
-test_that("get_colombia_cpi() returns years 2010 to 2022", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_true(all(result$year %in% 2010:2022))
+test_that("get_colombia_cpi returns correct indicator and country", {
+  skip_if(is.null(cpi_data), "Function returned NULL")
+  expect_true(all(cpi_data$indicator == "Consumer price index (2010 = 100)"))
+  expect_true(all(cpi_data$country == "Colombia"))
 })
 
-test_that("get_colombia_cpi() returns 13 rows (2010–2022)", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_equal(nrow(result), 13)
+test_that("get_colombia_cpi year column is complete and valid", {
+  skip_if(is.null(cpi_data), "Function returned NULL")
+  expect_equal(sort(cpi_data$year), 2010:2022)
+  expect_equal(length(unique(cpi_data$year)), 13)
 })
 
-test_that("get_colombia_cpi() allows for NA values in value column", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_true(any(is.na(result$value)) || all(!is.na(result$value)))
+test_that("get_colombia_cpi value column has valid values", {
+  skip_if(is.null(cpi_data), "Function returned NULL")
+  non_na_values <- cpi_data$value[!is.na(cpi_data$value)]
+  if (length(non_na_values) > 0) {
+    expect_true(all(non_na_values > 0))
+    expect_true(all(is.finite(non_na_values)))
+  }
 })
 
-test_that("get_colombia_cpi() years are sorted in descending order", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_equal(result$year, sort(result$year, decreasing = TRUE))
+test_that("get_colombia_cpi returns no duplicate rows", {
+  skip_if(is.null(cpi_data), "Function returned NULL")
+  expect_equal(nrow(cpi_data), nrow(unique(cpi_data)))
 })
-
-test_that("get_colombia_cpi() value column is numeric or NA", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_true(all(is.finite(result$value) | is.na(result$value)))
-})
-
-test_that("get_colombia_cpi() indicator and country are consistent across rows", {
-  skip_on_cran()
-  result <- get_colombia_cpi()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_equal(length(unique(result$indicator)), 1)
-  expect_equal(length(unique(result$country)), 1)
-})
-

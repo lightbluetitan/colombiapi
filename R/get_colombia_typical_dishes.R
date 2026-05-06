@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,60 +15,76 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#' Get Typical Dishes of Colombia
+
+#' Get Typical Dishes of Colombia from API Colombia
 #'
 #' @description
 #' Retrieves information about Colombia's typical dishes from the API Colombia.
-#' This function fetches only selected fields: id, name, description, and region.
+#' This function fetches only selected fields: id, name, and description.
 #'
-#' @return A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.
+#' @return A tibble with the following columns:
+#' \itemize{
+#'   \item \code{id}: Dish identifier (integer)
+#'   \item \code{name}: Dish name (character)
+#'   \item \code{description}: Dish description (character)
+#' }
+#' Returns \code{NULL} if the API request fails.
+#'
+#' @details
+#' This function sends a GET request to the API Colombia service.
+#' If the API request fails or returns an error status code,
+#' the function returns \code{NULL} with an informative message.
+#'
+#' @note Requires internet connection.
+#'
+#' @source API Colombia: \url{https://api-colombia.com/api/v1/TypicalDish}
 #'
 #' @examples
-#' \donttest{
-#' dishes <- get_colombia_typical_dishes()
-#' print(dishes)
+#' if (interactive()) {
+#'   get_colombia_typical_dishes()
 #' }
 #'
-#' @importFrom httr GET http_error content
+#' @seealso \code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
+#'
+#' @importFrom httr GET timeout http_error status_code content
 #' @importFrom jsonlite fromJSON
 #' @importFrom tibble tibble
 #'
 #' @export
 get_colombia_typical_dishes <- function() {
   url <- "https://api-colombia.com/api/v1/TypicalDish"
-
-  # Try to fetch data and handle connection errors
-  response <- tryCatch(
-    httr::GET(url),
+  res <- tryCatch(
+    httr::GET(url, httr::timeout(10)),
     error = function(e) {
       message("Could not connect to API Colombia: ", e$message)
       return(NULL)
     }
   )
-  if (is.null(response)) return(NULL)
-
-  # Check HTTP status
-  if (httr::http_error(response)) {
-    message("API request failed with status code: ", httr::status_code(response))
+  if (is.null(res)) {
     return(NULL)
   }
-
-  # Parse JSON
-  data_raw <- httr::content(response, as = "text", encoding = "UTF-8")
+  if (httr::http_error(res)) {
+    message("API Colombia returned status: ", httr::status_code(res))
+    return(NULL)
+  }
+  txt <- tryCatch(
+    httr::content(res, as = "text", encoding = "UTF-8"),
+    error = function(e) return(NULL)
+  )
+  if (is.null(txt)) {
+    return(NULL)
+  }
   data_list <- tryCatch(
-    jsonlite::fromJSON(data_raw),
+    jsonlite::fromJSON(txt),
     error = function(e) {
       message("Error parsing JSON: ", e$message)
       return(NULL)
     }
   )
-
   if (is.null(data_list) || length(data_list) == 0) {
     message("No data found for typical dishes in Colombia.")
     return(NULL)
   }
-
-  # Select only the requested fields
   tibble::tibble(
     id          = data_list$id,
     name        = data_list$name,

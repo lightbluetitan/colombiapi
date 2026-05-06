@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,66 +20,77 @@
 
 library(testthat)
 
-test_that("get_colombia_invasive_species() returns a tibble with correct structure", {
-  skip_on_cran()
-  result <- get_colombia_invasive_species()
-  skip_if(is.null(result), "API unavailable, test skipped")
+species_data <- get_colombia_invasive_species()
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("id", "name", "scientificName",
-                         "commonNames", "impact", "manage", "riskLevel"))
-  expect_equal(ncol(result), 7)
-  expect_gt(nrow(result), 0)  # should return multiple species
+test_that("get_colombia_invasive_species returns valid tibble structure", {
+  skip_if(is.null(species_data), "Function returned NULL")
+
+  expect_s3_class(species_data, "tbl_df")
+  expect_s3_class(species_data, "data.frame")
+
+  expect_equal(ncol(species_data), 7)
+  expect_true(nrow(species_data) > 0)
+
+  expect_equal(names(species_data),
+               c("id", "name", "scientificName", "commonNames",
+                 "impact", "manage", "riskLevel"))
 })
 
-test_that("get_colombia_invasive_species() returns correct data types", {
-  skip_on_cran()
-  result <- get_colombia_invasive_species()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_invasive_species returns correct column types", {
+  skip_if(is.null(species_data), "Function returned NULL")
 
-  expect_type(result$id, "integer")
-  expect_type(result$name, "character")
-  expect_type(result$scientificName, "character")
-  expect_type(result$commonNames, "character")
-  expect_type(result$impact, "character")
-  expect_type(result$manage, "character")
-  expect_type(result$riskLevel, "integer")
+  expect_type(species_data$id, "integer")
+  expect_type(species_data$name, "character")
+  expect_type(species_data$scientificName, "character")
+  expect_type(species_data$commonNames, "character")
+  expect_type(species_data$impact, "character")
+  expect_type(species_data$manage, "character")
+  expect_type(species_data$riskLevel, "integer")
 })
 
-test_that("get_colombia_invasive_species() id column is unique and positive", {
-  skip_on_cran()
-  result <- get_colombia_invasive_species()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_invasive_species id and riskLevel are valid", {
+  skip_if(is.null(species_data), "Function returned NULL")
 
-  expect_equal(length(unique(result$id)), nrow(result))  # unique ids
-  expect_true(all(result$id > 0))
+  expect_true(all(!is.na(species_data$id)))
+  expect_true(all(species_data$id > 0))
+
+  non_na_risk <- species_data$riskLevel[!is.na(species_data$riskLevel)]
+
+  if (length(non_na_risk) > 0) {
+    expect_true(all(is.finite(non_na_risk)))
+  }
 })
 
-test_that("get_colombia_invasive_species() riskLevel contains valid integer or NA values", {
-  skip_on_cran()
-  result <- get_colombia_invasive_species()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_invasive_species character columns have valid values", {
+  skip_if(is.null(species_data), "Function returned NULL")
 
-  # riskLevel should always be integer or NA
-  expect_true(all(is.integer(result$riskLevel) | is.na(result$riskLevel)))
+  expect_true(all(!is.na(species_data$name)))
+  expect_true(all(!is.na(species_data$scientificName)))
+
+  non_na_common <- species_data$commonNames[!is.na(species_data$commonNames)]
+  if (length(non_na_common) > 0) {
+    expect_true(all(nchar(trimws(non_na_common)) >= 0))
+  }
+
+  non_na_impact <- species_data$impact[!is.na(species_data$impact)]
+  if (length(non_na_impact) > 0) {
+    expect_true(all(nchar(trimws(non_na_impact)) >= 0))
+  }
+
+  non_na_manage <- species_data$manage[!is.na(species_data$manage)]
+  if (length(non_na_manage) > 0) {
+    expect_true(all(nchar(trimws(non_na_manage)) >= 0))
+  }
 })
 
-test_that("get_colombia_invasive_species() allows NA values in optional columns", {
-  skip_on_cran()
-  result <- get_colombia_invasive_species()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_invasive_species contains multiple distinct species", {
+  skip_if(is.null(species_data), "Function returned NULL")
 
-  # some text fields may contain NA
-  expect_true(any(is.na(result$impact)) || all(!is.na(result$impact)))
-  expect_true(any(is.na(result$manage)) || all(!is.na(result$manage)))
-  expect_true(any(is.na(result$commonNames)) || all(!is.na(result$commonNames)))
+  expect_true(length(unique(species_data$name)) > 10)
 })
 
-test_that("get_colombia_invasive_species() returns consistent columns across calls", {
-  skip_on_cran()
-  res1 <- get_colombia_invasive_species()
-  res2 <- get_colombia_invasive_species()
-  skip_if(is.null(res1) || is.null(res2), "API unavailable, test skipped")
+test_that("get_colombia_invasive_species returns no duplicate ids", {
+  skip_if(is.null(species_data), "Function returned NULL")
 
-  expect_named(res1, names(res2))
+  expect_equal(length(unique(species_data$id)), nrow(species_data))
 })

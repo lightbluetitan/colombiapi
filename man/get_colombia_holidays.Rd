@@ -30,8 +30,20 @@ The information is retrieved directly from the Nager.Date API and reflects
 the current status of holidays for the requested year.
 The field names returned are consistent with the API structure.
 }
+\details{
+This function sends a GET request to the Nager.Date API.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
+}
+\note{
+Requires internet connection.
+}
 \examples{
-get_colombia_holidays(2024)
-get_colombia_holidays(2025)
+if (interactive()) {
+  get_colombia_holidays(2024)
+}
 
+}
+\seealso{
+\code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
 }

@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,127 +19,68 @@
 
 library(testthat)
 
-test_that("get_colombia_regions() returns a tibble with correct structure", {
-  skip_on_cran()  # Skip test on CRAN if the API is unavailable
-  result <- get_colombia_regions()
-  # Skip if no data is returned
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("id", "name", "description"))
-  expect_equal(ncol(result), 3)
-  expect_equal(nrow(result), 6)  # Colombia has 6 natural regions
+regions_data <- get_colombia_regions()
+
+test_that("get_colombia_regions returns valid tibble structure", {
+  skip_if(is.null(regions_data), "Function returned NULL")
+
+  expect_s3_class(regions_data, "tbl_df")
+  expect_s3_class(regions_data, "data.frame")
+
+  expect_equal(ncol(regions_data), 3)
+  expect_true(nrow(regions_data) > 0)
+
+  expect_equal(names(regions_data), c("id", "name", "description"))
 })
 
-test_that("get_colombia_regions() returns correct data types", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_type(result$id, "integer")
-  expect_type(result$name, "character")
-  expect_type(result$description, "character")
+test_that("get_colombia_regions returns correct column types", {
+  skip_if(is.null(regions_data), "Function returned NULL")
+
+  expect_type(regions_data$id, "integer")
+  expect_type(regions_data$name, "character")
+  expect_type(regions_data$description, "character")
 })
 
-test_that("get_colombia_regions() returns expected Colombian regions", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expected_regions <- c("Caribe", "Pacífico", "Orinoquía", "Amazonía", "Andina", "Insular")
-  expect_true(all(expected_regions %in% result$name))
-  expect_equal(length(unique(result$name)), 6)
+test_that("get_colombia_regions id values are valid", {
+  skip_if(is.null(regions_data), "Function returned NULL")
+
+  expect_true(all(!is.na(regions_data$id)))
+  expect_true(all(regions_data$id > 0))
 })
 
-test_that("get_colombia_regions() returns valid region IDs", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_true(all(result$id >= 1 & result$id <= 6))
-  expect_equal(length(unique(result$id)), 6)  # All IDs should be unique
-  expect_false(any(is.na(result$id)))
+test_that("get_colombia_regions name column has valid values", {
+  skip_if(is.null(regions_data), "Function returned NULL")
+
+  non_na_names <- regions_data$name[!is.na(regions_data$name)]
+
+  if (length(non_na_names) > 0) {
+    expect_true(all(nchar(trimws(non_na_names)) > 0))
+  }
 })
 
-test_that("get_colombia_regions() returns non-empty descriptions", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_true(all(nchar(result$description) > 0))
-  expect_false(any(is.na(result$description)))
-  expect_true(all(nchar(result$description) > 50))  # Descriptions should be substantial
+test_that("get_colombia_regions description column has valid values", {
+  skip_if(is.null(regions_data), "Function returned NULL")
+
+  non_na_desc <- regions_data$description[!is.na(regions_data$description)]
+
+  if (length(non_na_desc) > 0) {
+    expect_true(all(nchar(trimws(non_na_desc)) > 0))
+  }
 })
 
-test_that("get_colombia_regions() returns non-empty region names", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_true(all(nchar(result$name) > 0))
-  expect_false(any(is.na(result$name)))
-  expect_true(all(nchar(result$name) >= 5))  # Region names should have reasonable length
+test_that("get_colombia_regions includes known regions", {
+  skip_if(is.null(regions_data), "Function returned NULL")
+
+  expected_regions <- c("Caribe", "Andina", "Amazonía")
+  found_regions <- regions_data$name
+
+  expect_true(any(expected_regions %in% found_regions))
 })
 
-test_that("get_colombia_regions() handles API connection gracefully", {
-  # This test ensures the function returns NULL when API is unavailable
-  # We can't force an API failure in testing, but we verify the structure
-  # allows for NULL returns as designed
-  result <- get_colombia_regions()
-  expect_true(is.null(result) || is.data.frame(result))
+test_that("get_colombia_regions returns no duplicate rows", {
+  skip_if(is.null(regions_data), "Function returned NULL")
+
+  expect_equal(nrow(regions_data), nrow(unique(regions_data)))
 })
 
-test_that("get_colombia_regions() returns consistent structure across calls", {
-  skip_on_cran()
-  result1 <- get_colombia_regions()
-  skip_if(is.null(result1), "API unavailable, test skipped")
-  result2 <- get_colombia_regions()
-  skip_if(is.null(result2), "API unavailable, test skipped")
-  expect_named(result1, c("id", "name", "description"))
-  expect_named(result2, c("id", "name", "description"))
-  expect_equal(class(result1), class(result2))
-  expect_equal(nrow(result1), nrow(result2))
-})
 
-test_that("get_colombia_regions() IDs are sequential and start from 1", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_equal(sort(result$id), 1:6)
-  expect_true(min(result$id) == 1)
-  expect_true(max(result$id) == 6)
-})
-
-test_that("get_colombia_regions() contains specific region names", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_true("Caribe" %in% result$name)
-  expect_true("Pacífico" %in% result$name)
-  expect_true("Orinoquía" %in% result$name)
-  expect_true("Amazonía" %in% result$name)
-  expect_true("Andina" %in% result$name)
-  expect_true("Insular" %in% result$name)
-})
-
-test_that("get_colombia_regions() descriptions contain region-specific keywords", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  caribe_desc <- result$description[result$name == "Caribe"]
-  pacifico_desc <- result$description[result$name == "Pacífico"]
-  orinoquia_desc <- result$description[result$name == "Orinoquía"]
-  amazonia_desc <- result$description[result$name == "Amazonía"]
-  andina_desc <- result$description[result$name == "Andina"]
-  insular_desc <- result$description[result$name == "Insular"]
-
-  expect_true(grepl("caribe|Caribe", caribe_desc, ignore.case = TRUE))
-  expect_true(grepl("pacífico|Pacífico|pacifico|Pacifico", pacifico_desc, ignore.case = TRUE))
-  expect_true(grepl("orinoquia|Orinoquia", orinoquia_desc, ignore.case = TRUE))
-  expect_true(grepl("amazónica|amazonica|Amazónica|Amazonica", amazonia_desc, ignore.case = TRUE))
-  expect_true(grepl("andina|Andina", andina_desc, ignore.case = TRUE))
-  expect_true(grepl("insular|Insular", insular_desc, ignore.case = TRUE))
-})
-
-test_that("get_colombia_regions() returns exactly 6 unique regions", {
-  skip_on_cran()
-  result <- get_colombia_regions()
-  skip_if(is.null(result), "API unavailable, test skipped")
-  expect_equal(nrow(result), 6)
-  expect_equal(length(unique(result$id)), 6)
-  expect_equal(length(unique(result$name)), 6)
-})

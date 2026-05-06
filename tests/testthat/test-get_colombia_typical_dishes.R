@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,62 +17,68 @@
 
 # get_colombia_typical_dishes
 
-
 library(testthat)
 
-test_that("get_colombia_typical_dishes() returns a tibble with correct structure", {
-  skip_on_cran()
-  result <- get_colombia_typical_dishes()
-  skip_if(is.null(result), "API unavailable, test skipped")
+dishes_data <- get_colombia_typical_dishes()
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("id", "name", "description"))
-  expect_gt(nrow(result), 0)       # should return some dishes
-  expect_equal(ncol(result), 3)
+test_that("get_colombia_typical_dishes returns valid tibble structure", {
+  skip_if(is.null(dishes_data), "Function returned NULL")
+
+  expect_s3_class(dishes_data, "tbl_df")
+  expect_s3_class(dishes_data, "data.frame")
+
+  expect_equal(ncol(dishes_data), 3)
+  expect_true(nrow(dishes_data) > 0)
+
+  expect_equal(names(dishes_data), c("id", "name", "description"))
 })
 
-test_that("get_colombia_typical_dishes() returns correct data types", {
-  skip_on_cran()
-  result <- get_colombia_typical_dishes()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_typical_dishes returns correct column types", {
+  skip_if(is.null(dishes_data), "Function returned NULL")
 
-  expect_type(result$id, "integer")
-  expect_type(result$name, "character")
-  expect_type(result$description, "character")
+  expect_type(dishes_data$id, "integer")
+  expect_type(dishes_data$name, "character")
+  expect_type(dishes_data$description, "character")
 })
 
-test_that("get_colombia_typical_dishes() returns reasonable values", {
-  skip_on_cran()
-  result <- get_colombia_typical_dishes()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_typical_dishes id values are valid", {
+  skip_if(is.null(dishes_data), "Function returned NULL")
 
-  expect_true(all(result$id > 0))
-  expect_true(all(nchar(result$name) > 0))
-  expect_true(all(nchar(result$description) > 0))
+  expect_true(all(!is.na(dishes_data$id)))
+  expect_true(all(dishes_data$id > 0))
 })
 
-test_that("get_colombia_typical_dishes() handles consistent structure across calls", {
-  skip_on_cran()
-  res1 <- get_colombia_typical_dishes()
-  res2 <- get_colombia_typical_dishes()
-  skip_if(is.null(res1) || is.null(res2), "API unavailable, test skipped")
+test_that("get_colombia_typical_dishes name column has valid values", {
+  skip_if(is.null(dishes_data), "Function returned NULL")
 
-  expect_named(res1, c("id", "name", "description"))
-  expect_named(res2, c("id", "name", "description"))
+  non_na_names <- dishes_data$name[!is.na(dishes_data$name)]
+
+  if (length(non_na_names) > 0) {
+    expect_true(all(nchar(trimws(non_na_names)) > 0))
+  }
 })
 
-test_that("get_colombia_typical_dishes() allows for NAs in description if any", {
-  skip_on_cran()
-  result <- get_colombia_typical_dishes()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_typical_dishes description column has valid values", {
+  skip_if(is.null(dishes_data), "Function returned NULL")
 
-  expect_true(any(is.na(result$description)) || all(!is.na(result$description)))
+  non_na_desc <- dishes_data$description[!is.na(dishes_data$description)]
+
+  if (length(non_na_desc) > 0) {
+    expect_true(all(nchar(trimws(non_na_desc)) > 0))
+  }
 })
 
-test_that("get_colombia_typical_dishes() ids are unique", {
-  skip_on_cran()
-  result <- get_colombia_typical_dishes()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_typical_dishes includes known dishes", {
+  skip_if(is.null(dishes_data), "Function returned NULL")
 
-  expect_equal(length(unique(result$id)), nrow(result))
+  expected_dishes <- c("Bandeja Paisa", "Ajiaco Santafereño", "Lechona Tolimense")
+  found_dishes <- dishes_data$name
+
+  expect_true(any(expected_dishes %in% found_dishes))
+})
+
+test_that("get_colombia_typical_dishes returns no duplicate rows", {
+  skip_if(is.null(dishes_data), "Function returned NULL")
+
+  expect_equal(nrow(dishes_data), nrow(unique(dishes_data)))
 })

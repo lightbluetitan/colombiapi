@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,54 +21,72 @@
 #' Retrieves selected information about touristic attractions in Colombia from the API Colombia.
 #' This function fetches the attraction ID, name, description, latitude, longitude, and city ID.
 #'
-#' @return A tibble with multiple rows, each representing a touristic attraction in Colombia, or NULL if the API is unavailable.
+#' @return A tibble with the following columns:
+#' \itemize{
+#'   \item \code{id}: Attraction identifier (integer)
+#'   \item \code{name}: Attraction name (character)
+#'   \item \code{description}: Attraction description (character)
+#'   \item \code{latitude}: Latitude coordinates (numeric)
+#'   \item \code{longitude}: Longitude coordinates (numeric)
+#'   \item \code{cityId}: City identifier (integer)
+#' }
+#' Returns \code{NULL} if the API request fails.
+#'
+#' @details
+#' This function sends a GET request to the API Colombia service.
+#' If the API request fails or returns an error status code,
+#' the function returns \code{NULL} with an informative message.
+#'
+#' @note Requires internet connection.
+#'
+#' @source API Colombia: \url{https://api-colombia.com/api/v1/TouristicAttraction}
 #'
 #' @examples
-#' \donttest{
-#' attractions <- get_colombia_attractions()
-#' print(attractions)
+#' if (interactive()) {
+#'   get_colombia_attractions()
 #' }
 #'
-#' @importFrom httr GET http_error content
+#' @seealso \code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
+#'
+#' @importFrom httr GET timeout http_error status_code content
 #' @importFrom jsonlite fromJSON
 #' @importFrom tibble tibble
 #'
 #' @export
 get_colombia_attractions <- function() {
   url <- "https://api-colombia.com/api/v1/TouristicAttraction"
-
-  # Try to fetch the data and handle connection errors
-  response <- tryCatch(
-    httr::GET(url),
+  res <- tryCatch(
+    httr::GET(url, httr::timeout(10)),
     error = function(e) {
       message("Failed to connect to api-colombia.com: ", e$message)
       return(NULL)
     }
   )
-  if (is.null(response)) return(NULL)  # Return NULL if connection failed
-
-  # Check HTTP status code
-  if (httr::http_error(response)) {
-    message("API request failed with status code: ", httr::status_code(response))
+  if (is.null(res)) {
     return(NULL)
   }
-
-  # Convert response to text and parse JSON
-  data_raw <- httr::content(response, as = "text", encoding = "UTF-8")
+  if (httr::http_error(res)) {
+    message("API Colombia returned status: ", httr::status_code(res))
+    return(NULL)
+  }
+  txt <- tryCatch(
+    httr::content(res, as = "text", encoding = "UTF-8"),
+    error = function(e) return(NULL)
+  )
+  if (is.null(txt)) {
+    return(NULL)
+  }
   data_list <- tryCatch(
-    jsonlite::fromJSON(data_raw),
+    jsonlite::fromJSON(txt),
     error = function(e) {
       message("Error parsing JSON: ", e$message)
       return(NULL)
     }
   )
-
   if (is.null(data_list) || length(data_list) == 0) {
     message("No touristic attraction data found for Colombia.")
     return(NULL)
   }
-
-  # Select only required fields
   tibble::tibble(
     id          = data_list$id,
     name        = data_list$name,

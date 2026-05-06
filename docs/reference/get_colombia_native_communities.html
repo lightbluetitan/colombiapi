@@ -9,7 +9,7 @@ This function fetches only selected fields: id, name, description, and languages
 
     <a class="navbar-brand me-2" href="../index.html">ColombiAPI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,30 +49,37 @@ This function fetches only selected fields: id, name, description, and languages
     </div>
 
     <div class="section level2">
+    <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
+    <p>API Colombia: <a href="https://api-colombia.com/api/v1/NativeCommunity" class="external-link">https://api-colombia.com/api/v1/NativeCommunity</a></p>
+    </div>
+    <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.</p>
+    <p>A tibble with the following columns:</p><ul><li><p><code>id</code>: Community identifier (integer)</p></li>
+<li><p><code>name</code>: Community name (character)</p></li>
+<li><p><code>description</code>: Community description (character)</p></li>
+<li><p><code>languages</code>: Languages spoken by the community (list)</p></li>
+</ul><p>Returns <code>NULL</code> if the API request fails.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns <code>NULL</code> with an informative message.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Requires internet connection.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="https://httr.r-lib.org/reference/GET.html" class="external-link">GET</a></code>, <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">fromJSON</a></code>, <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">native_communities</span> <span class="op">&lt;-</span> <span class="fu">get_colombia_native_communities</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">native_communities</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 57 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       id name            description                                   languages</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1 Achagua Piapoco <span style="color: #949494;">"</span>Achagua es un pueblo indígena, que hasta el… Achagua,…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     2 Amorua          <span style="color: #949494;">"</span>Este grupo habita en los ríos Orinoco y Met… Pertenec…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     3 Andoque         <span style="color: #949494;">"</span>Andoque o Paasiaja es el pueblo indígena qu… Andoque  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     4 Arhuaco         <span style="color: #949494;">"</span>Los ika, iku, o bintukua –llamados comúnmen… Idioma I…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     5 AWÁ             <span style="color: #949494;">"</span>Los awá, cuaiquer (o kwaiker) son un pueblo… Awá pit,…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     6 Camentza        <span style="color: #949494;">"</span>Camsá, kamsá o camëntšá (también sibundoy y… Camsà    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     7 Chimilas        <span style="color: #949494;">"</span>Chimila o ette ennaka (\"gente propia\")​ e…  Ette taa…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8 Cocama          <span style="color: #949494;">"</span>Los cocama, kukama u omaguas son un pueblo … Idioma c…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9 Cofan - Kofan   <span style="color: #949494;">"</span>Cofán, Kofán o A\"i es un pueblo amerindio … A'ingae …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10 Coreguaje       <span style="color: #949494;">"</span>Coreguaje, Korébajü o Koré pâín denominació… Su idiom…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 47 more rows</span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">get_colombia_native_communities</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

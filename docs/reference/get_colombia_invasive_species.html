@@ -11,7 +11,7 @@ commonNames, impact, manage, and riskLevel."><meta property="og:image" content="
 
     <a class="navbar-brand me-2" href="../index.html">ColombiAPI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,30 +52,40 @@ commonNames, impact, manage, and riskLevel.</p>
     </div>
 
     <div class="section level2">
+    <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
+    <p>API Colombia: <a href="https://api-colombia.com/api/v1/InvasiveSpecie" class="external-link">https://api-colombia.com/api/v1/InvasiveSpecie</a></p>
+    </div>
+    <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.</p>
+    <p>A tibble with the following columns:</p><ul><li><p><code>id</code>: Species identifier (integer)</p></li>
+<li><p><code>name</code>: Species common name (character)</p></li>
+<li><p><code>scientificName</code>: Scientific name of the species (character)</p></li>
+<li><p><code>commonNames</code>: List of common names (list)</p></li>
+<li><p><code>impact</code>: Description of ecological impact (character)</p></li>
+<li><p><code>manage</code>: Management recommendations (character)</p></li>
+<li><p><code>riskLevel</code>: Risk level classification (character)</p></li>
+</ul><p>Returns <code>NULL</code> if the API request fails.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns <code>NULL</code> with an informative message.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Requires internet connection.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="https://httr.r-lib.org/reference/GET.html" class="external-link">GET</a></code>, <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">fromJSON</a></code>, <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">invasive_species</span> <span class="op">&lt;-</span> <span class="fu">get_colombia_invasive_species</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">invasive_species</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 72 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       id name                 scientificName commonNames impact manage riskLevel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1 Acacia negra, gris   Acacia decurr… <span style="color: #949494;">"</span>acacia ce… <span style="color: #949494;">"</span>Esta… A pes…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     2 Alfombra de agua     Azolla filicu… <span style="color: #949494;">"</span>Azola, he… <span style="color: #949494;">"</span>Esta… Primo…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     3 Algodón de seda      Calotropis pr… <span style="color: #949494;">"</span>algodón e… <span style="color: #949494;">"</span>Este… C. pr…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     4 Árbol del pan        Artocarpus al… <span style="color: #949494;">"</span>pandiaño,… <span style="color: #949494;">"</span>Como… Estos…         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     5 Bambú de la India    Bambusa vulga… <span style="color: #949494;">"</span>bambú, gu… <span style="color: #949494;">"</span> B. … Se pu…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     6 Botón de oro         Tithonia dive… <span style="color: #949494;">"</span>botón de … <span style="color: #949494;">"</span>T. d… Cuand…         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     7 Braquiaria           Urochloa decu… <span style="color: #949494;">"</span>brachiari… <span style="color: #949494;">"</span>este… Gener…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8 Buchón               Limnobium lae… <span style="color: #949494;">"</span>buchón, b… <span style="color: #949494;">"</span>L. l… Lange…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    22 Helecho serrucho     Nephrolepis c… <span style="color: #949494;">"</span>helecho s… <span style="color: #949494;">"</span>N. c… se pu…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>     9 Buchón de agua, tar… Eichhornia cr… <span style="color: #949494;">"</span>buchón, t… <span style="color: #949494;">"</span>es c… El co…         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 62 more rows</span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">get_colombia_invasive_species</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

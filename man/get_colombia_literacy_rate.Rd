@@ -32,9 +32,8 @@ the function returns \code{NULL} with an informative message.
 Requires internet connection.
 }
 \examples{
-\donttest{
-  literacy_data <- get_colombia_literacy_rate()
-  head(literacy_data)
+if (interactive()) {
+  get_colombia_literacy_rate()
 }
 
 }

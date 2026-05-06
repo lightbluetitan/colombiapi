@@ -3,21 +3,44 @@
 \name{get_colombia_natural_areas}
 \alias{get_colombia_natural_areas}
 \title{Get Natural Areas of Colombia}
+\source{
+API Colombia: \url{https://api-colombia.com/api/v1/NaturalArea}
+}
 \usage{
 get_colombia_natural_areas()
 }
 \value{
-A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.
+A tibble with the following columns:
+\itemize{
+  \item \code{id}: Natural area identifier (integer)
+  \item \code{areaGroupId}: Area group identifier (integer)
+  \item \code{categoryNaturalAreaId}: Category identifier for the natural area (integer)
+  \item \code{name}: Natural area name (character)
+  \item \code{departmentId}: Department identifier (integer)
+  \item \code{daneCode}: DANE statistical code (character)
+  \item \code{landArea}: Land area in hectares (numeric)
+}
+Returns \code{NULL} if the API request fails.
 }
 \description{
 Retrieves information about natural areas in Colombia from the API Colombia.
 This function fetches only selected fields: id, areaGroupId, categoryNaturalAreaId,
 name, departmentId, daneCode, and landArea.
 }
+\details{
+This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
+}
+\note{
+Requires internet connection.
+}
 \examples{
-\donttest{
-natural_areas <- get_colombia_natural_areas()
-print(natural_areas)
+if (interactive()) {
+  get_colombia_natural_areas()
 }
 
+}
+\seealso{
+\code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
 }

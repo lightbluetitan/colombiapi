@@ -3,20 +3,42 @@
 \name{get_colombia_attractions}
 \alias{get_colombia_attractions}
 \title{Get All Touristic Attractions of Colombia}
+\source{
+API Colombia: \url{https://api-colombia.com/api/v1/TouristicAttraction}
+}
 \usage{
 get_colombia_attractions()
 }
 \value{
-A tibble with multiple rows, each representing a touristic attraction in Colombia, or NULL if the API is unavailable.
+A tibble with the following columns:
+\itemize{
+  \item \code{id}: Attraction identifier (integer)
+  \item \code{name}: Attraction name (character)
+  \item \code{description}: Attraction description (character)
+  \item \code{latitude}: Latitude coordinates (numeric)
+  \item \code{longitude}: Longitude coordinates (numeric)
+  \item \code{cityId}: City identifier (integer)
+}
+Returns \code{NULL} if the API request fails.
 }
 \description{
 Retrieves selected information about touristic attractions in Colombia from the API Colombia.
 This function fetches the attraction ID, name, description, latitude, longitude, and city ID.
 }
+\details{
+This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
+}
+\note{
+Requires internet connection.
+}
 \examples{
-\donttest{
-attractions <- get_colombia_attractions()
-print(attractions)
+if (interactive()) {
+  get_colombia_attractions()
 }
 
+}
+\seealso{
+\code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
 }

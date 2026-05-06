@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,27 +36,68 @@
 #'   \item \code{name}: Holiday name in English
 #' }
 #'
+#' @details
+#' This function sends a GET request to the Nager.Date API.
+#' If the API request fails or returns an error status code,
+#' the function returns \code{NULL} with an informative message.
+#'
+#' @note Requires internet connection.
+#'
 #' @source Data obtained from the Nager.Date API: \url{https://date.nager.at/}
 #'
 #' @examples
-#' get_colombia_holidays(2024)
-#' get_colombia_holidays(2025)
+#' if (interactive()) {
+#'   get_colombia_holidays(2024)
+#' }
 #'
-#' @importFrom httr GET status_code content
+#' @seealso \code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
+#'
+#' @importFrom httr GET timeout status_code content
 #' @importFrom jsonlite fromJSON
 #' @importFrom tibble tibble
 #'
 #' @export
 get_colombia_holidays <- function(year) {
-  url <- sprintf("https://date.nager.at/api/v3/PublicHolidays/%s/CO", year)
-  response <- httr::GET(url)
-  if (httr::status_code(response) != 200) {
-    stop("Failed to retrieve data from Nager.Date API. Check the year or try again later.")
+  if (!is.numeric(year) || length(year) != 1) {
+    message("`year` must be a single numeric value.")
+    return(NULL)
   }
-  data <- jsonlite::fromJSON(httr::content(response, as = "text", encoding = "UTF-8"))
+  url <- sprintf(
+    "https://date.nager.at/api/v3/PublicHolidays/%s/CO",
+    as.integer(year)
+  )
+  res <- tryCatch(
+    httr::GET(url, httr::timeout(10)),
+    error = function(e) {
+      message("Nager.Date API request failed: ", e$message)
+      return(NULL)
+    }
+  )
+  if (is.null(res)) {
+    return(NULL)
+  }
+  if (httr::status_code(res) != 200) {
+    message("Nager.Date API returned status: ", httr::status_code(res))
+    return(NULL)
+  }
+  txt <- tryCatch(
+    httr::content(res, as = "text", encoding = "UTF-8"),
+    error = function(e) return(NULL)
+  )
+  if (is.null(txt)) {
+    return(NULL)
+  }
+  data <- tryCatch(
+    jsonlite::fromJSON(txt),
+    error = function(e) return(NULL)
+  )
+  if (is.null(data) || nrow(data) == 0) {
+    message("No holiday data available for the specified year.")
+    return(NULL)
+  }
   tibble::tibble(
-    date = as.Date(data$date),
+    date       = as.Date(data$date),
     local_name = data$localName,
-    name = data$name
+    name       = data$name
   )
 }

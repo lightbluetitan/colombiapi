@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,67 +17,80 @@
 
 # get_colombia_radios
 
+
+
 library(testthat)
 
-test_that("get_colombia_radios() returns a tibble with correct structure", {
-  skip_on_cran()
-  result <- get_colombia_radios()
-  skip_if(is.null(result), "API unavailable, test skipped")
+radios_data <- get_colombia_radios()
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("id", "name", "frequency", "band"))
-  expect_equal(ncol(result), 4)
-  expect_gt(nrow(result), 0)  # should return multiple radio stations
+test_that("get_colombia_radios returns valid tibble structure", {
+  skip_if(is.null(radios_data), "Function returned NULL")
+
+  expect_s3_class(radios_data, "tbl_df")
+  expect_s3_class(radios_data, "data.frame")
+
+  expect_equal(ncol(radios_data), 4)
+  expect_true(nrow(radios_data) > 0)
+
+  expect_equal(names(radios_data), c("id", "name", "frequency", "band"))
 })
 
-test_that("get_colombia_radios() returns correct data types", {
-  skip_on_cran()
-  result <- get_colombia_radios()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_radios returns correct column types", {
+  skip_if(is.null(radios_data), "Function returned NULL")
 
-  expect_type(result$id, "integer")
-  expect_type(result$name, "character")
-  expect_type(result$frequency, "double")
-  expect_type(result$band, "character")
+  expect_type(radios_data$id, "integer")
+  expect_type(radios_data$name, "character")
+  expect_true(is.numeric(radios_data$frequency))
+  expect_type(radios_data$band, "character")
 })
 
-test_that("get_colombia_radios() id column is unique and positive", {
-  skip_on_cran()
-  result <- get_colombia_radios()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_radios id values are valid", {
+  skip_if(is.null(radios_data), "Function returned NULL")
 
-  expect_equal(length(unique(result$id)), nrow(result))  # unique ids
-  expect_true(all(result$id > 0))
+  expect_true(all(!is.na(radios_data$id)))
+  expect_true(all(radios_data$id > 0))
 })
 
-test_that("get_colombia_radios() allows NA values in optional columns", {
-  skip_on_cran()
-  result <- get_colombia_radios()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_radios band contains valid categories", {
+  skip_if(is.null(radios_data), "Function returned NULL")
 
-  expect_true(any(is.na(result$name)) || all(!is.na(result$name)))
-  expect_true(any(is.na(result$frequency)) || all(!is.na(result$frequency)))
-  expect_true(any(is.na(result$band)) || all(!is.na(result$band)))
+  expect_true(all(!is.na(radios_data$band)))
+  expect_true(all(nchar(radios_data$band) > 0))
 })
 
-test_that("get_colombia_radios() returns consistent columns across calls", {
-  skip_on_cran()
-  res1 <- get_colombia_radios()
-  res2 <- get_colombia_radios()
-  skip_if(is.null(res1) || is.null(res2), "API unavailable, test skipped")
+test_that("get_colombia_radios frequency values are valid", {
+  skip_if(is.null(radios_data), "Function returned NULL")
 
-  expect_named(res1, names(res2))
+  non_na_freq <- radios_data$frequency[!is.na(radios_data$frequency)]
+
+  if (length(non_na_freq) > 0) {
+    expect_true(all(is.finite(non_na_freq)))
+    # IMPORTANTE: NO se valida > 0 porque hay radios tipo Stream con frecuencia = 0
+  }
 })
 
-test_that("get_colombia_radios() frequency values are non-negative", {
-  skip_on_cran()
-  result <- get_colombia_radios()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_radios name column has valid values", {
+  skip_if(is.null(radios_data), "Function returned NULL")
 
-  expect_true(all(result$frequency >= 0 | is.na(result$frequency)))
+  non_na_names <- radios_data$name[!is.na(radios_data$name)]
+
+  if (length(non_na_names) > 0) {
+    expect_true(all(nchar(trimws(non_na_names)) > 0))
+  }
 })
 
+test_that("get_colombia_radios includes expected bands", {
+  skip_if(is.null(radios_data), "Function returned NULL")
 
+  expected_bands <- c("FM", "AM", "Stream")
+  found_bands <- unique(radios_data$band)
 
+  expect_true(any(found_bands %in% expected_bands))
+})
 
+test_that("get_colombia_radios returns no duplicate rows", {
+  skip_if(is.null(radios_data), "Function returned NULL")
+
+  expect_equal(nrow(radios_data), nrow(unique(radios_data)))
+})
 

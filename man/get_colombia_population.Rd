@@ -25,7 +25,8 @@ using the World Bank Open Data API. The indicator used is \code{SP.POP.TOTL}.
 }
 \details{
 The function sends a GET request to the World Bank API.
-If the API request fails or returns an error status code, the function returns \code{NULL} with an informative message.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
 }
 \note{
 Requires internet connection. The data is retrieved in real time from the World Bank API.

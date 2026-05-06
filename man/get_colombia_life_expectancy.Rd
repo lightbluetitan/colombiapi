@@ -26,16 +26,14 @@ The indicator used is \code{SP.DYN.LE00.IN}.
 \details{
 This function sends a GET request to the World Bank API.
 If the API request fails or returns an error status code,
-the function returns an empty tibble with the expected structure,
-instead of NULL, to ensure CRAN compatibility in offline checks.
+the function returns \code{NULL} with an informative message.
 }
 \note{
-Requires internet connection for real data.
+Requires internet connection.
 }
 \examples{
-\donttest{
-  life_expectancy_data <- get_colombia_life_expectancy()
-  head(life_expectancy_data)
+if (interactive()) {
+  get_colombia_life_expectancy()
 }
 
 }

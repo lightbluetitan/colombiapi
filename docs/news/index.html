@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ColombiAPI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,59 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.1" id="colombiapi-031">ColombiAPI 0.3.1<a class="anchor" aria-label="anchor" href="#colombiapi-031"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.2" id="colombiapi-032">ColombiAPI 0.3.2<a class="anchor" aria-label="anchor" href="#colombiapi-032"></a></h2>
+<div class="section level3">
+<h3 id="cran-policy-compliance--graceful-failure-for-internet-resources-0-3-2">CRAN Policy Compliance — Graceful Failure for Internet Resources<a class="anchor" aria-label="anchor" href="#cran-policy-compliance--graceful-failure-for-internet-resources-0-3-2"></a></h3>
+<p>This release fixes all functions that use internet resources to comply with the CRAN policy: <em>“Packages which use Internet resources should fail gracefully with an informative message if the resource is not available or has changed.”</em></p>
+<div class="section level4">
+<h4 id="functions-fixed--api-colombia-0-3-2">Functions fixed — API Colombia<a class="anchor" aria-label="anchor" href="#functions-fixed--api-colombia-0-3-2"></a></h4>
+<ul><li><p><code><a href="../reference/get_colombia_airports.html">get_colombia_airports()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_attractions.html">get_colombia_attractions()</a></code>: Added <code>httr::timeout(10)</code> and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>. Renamed internal variable <code>response</code> to <code>res</code> for consistency.</p></li>
+<li><p><code><a href="../reference/get_colombia_cities.html">get_colombia_cities()</a></code>: Added <code>httr::timeout(10)</code> and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>. Renamed internal variable <code>response</code> to <code>res</code> for consistency.</p></li>
+<li><p><code><a href="../reference/get_colombia_departments.html">get_colombia_departments()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_invasive_species.html">get_colombia_invasive_species()</a></code>: Added <code>httr::timeout(10)</code> and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>. Renamed internal variable <code>response</code> to <code>res</code> for consistency.</p></li>
+<li><p><code><a href="../reference/get_colombia_native_communities.html">get_colombia_native_communities()</a></code>: Added <code>httr::timeout(10)</code> and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>. Renamed internal variable <code>response</code> to <code>res</code> for consistency.</p></li>
+<li><p><code><a href="../reference/get_colombia_natural_areas.html">get_colombia_natural_areas()</a></code>: Added <code>httr::timeout(10)</code> and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>. Renamed internal variable <code>response</code> to <code>res</code> for consistency.</p></li>
+<li><p><code><a href="../reference/get_colombia_presidents.html">get_colombia_presidents()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_radios.html">get_colombia_radios()</a></code>: Added <code>httr::timeout(10)</code> and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>. Renamed internal variable <code>response</code> to <code>res</code> for consistency.</p></li>
+<li><p><code><a href="../reference/get_colombia_regions.html">get_colombia_regions()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_typical_dishes.html">get_colombia_typical_dishes()</a></code>: Added <code>httr::timeout(10)</code> and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>. Renamed internal variable <code>response</code> to <code>res</code> for consistency.</p></li>
+</ul></div>
+<div class="section level4">
+<h4 id="functions-fixed--world-bank-api-0-3-2">Functions fixed — World Bank API<a class="anchor" aria-label="anchor" href="#functions-fixed--world-bank-api-0-3-2"></a></h4>
+<ul><li><p><code><a href="../reference/get_colombia_child_mortality.html">get_colombia_child_mortality()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Removed unnecessary <code>return(df)</code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_cpi.html">get_colombia_cpi()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Removed unnecessary <code>return(df)</code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_energy_use.html">get_colombia_energy_use()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Removed unnecessary <code>return(df)</code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_gdp.html">get_colombia_gdp()</a></code>: Added <code>timeout</code> and <code>status_code</code> to <code>@importFrom httr</code> directive. All other graceful failure handling was already correctly implemented.</p></li>
+<li><p><code><a href="../reference/get_colombia_hospital_beds.html">get_colombia_hospital_beds()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Removed unnecessary <code>return(df)</code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_life_expectancy.html">get_colombia_life_expectancy()</a></code>: Removed incorrect <code>empty_df</code> fallback pattern and <code>User-Agent</code> header. Standardized to return <code>NULL</code> with an informative message on failure. Removed <code>if (interactive())</code> guards on <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> calls. Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> as a separate guard. Replaced <code>\donttest{}</code> with <code>if (interactive())</code> in examples.</p></li>
+<li><p><code><a href="../reference/get_colombia_literacy_rate.html">get_colombia_literacy_rate()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Replaced <code>\donttest{}</code> with <code>if (interactive())</code> in examples. Removed unnecessary <code>return(df)</code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_population.html">get_colombia_population()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Removed unnecessary <code>return(df)</code>.</p></li>
+<li><p><code><a href="../reference/get_colombia_unemployment.html">get_colombia_unemployment()</a></code>: Added <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> guard, <code><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">httr::status_code()</a></code>, and <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code> and <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code>. Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Removed unnecessary <code>return(df)</code>.</p></li>
+</ul></div>
+<div class="section level4">
+<h4 id="functions-fixed--nagerdate-api-0-3-2">Functions fixed — Nager.Date API<a class="anchor" aria-label="anchor" href="#functions-fixed--nagerdate-api-0-3-2"></a></h4>
+<ul><li>
+<code><a href="../reference/get_colombia_holidays.html">get_colombia_holidays()</a></code>: Added <code>@details</code>, <code>@note</code>, and <code>@seealso</code> roxygen tags for consistency with the rest of the package. Removed internal comments for cleaner code. All graceful failure handling was already correctly implemented.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="functions-fixed--rest-countries-api-0-3-2">Functions fixed — REST Countries API<a class="anchor" aria-label="anchor" href="#functions-fixed--rest-countries-api-0-3-2"></a></h4>
+<ul><li>
+<code><a href="../reference/get_country_info_co.html">get_country_info_co()</a></code>: Added <code>httr::timeout(10)</code>, <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> on <code><a href="https://httr.r-lib.org/reference/content.html" class="external-link">httr::content()</a></code>, <code>nchar(txt) == 0</code> validation for empty responses, and defensive field extraction with <code>NA_character_</code> / <code>NA_real_</code> fallbacks for all fields. Removed Spanish-language error messages for consistency. Renamed internal variable <code>response</code> to <code>res</code>. Replaced <code>\donttest{}</code> with <code>if (interactive())</code> in examples. Expanded <code>@return</code>, <code>@description</code>, <code>@details</code>, and <code>@note</code> roxygen tags for consistency.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="additional-improvements-across-all-fixed-functions-0-3-2">Additional improvements across all fixed functions<a class="anchor" aria-label="anchor" href="#additional-improvements-across-all-fixed-functions-0-3-2"></a></h4>
+<ul><li>Replaced <code>res$status_code</code> with <code>httr::status_code(res)</code> (correct httr idiom).</li>
+<li>Corrected <code><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null()</a></code> check order — always evaluated before <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code> to prevent errors when object is NULL.</li>
+<li>Replaced <code>\donttest{}</code> with <code>if (interactive())</code> in all examples for consistency.</li>
+<li>Removed unnecessary <code>return(df)</code> at end of functions (idiomatic R style).</li>
+<li>Updated <code>@importFrom httr</code> directives to include <code>timeout</code> and <code>status_code</code> where missing.</li>
+<li>Updated copyright year from 2025 to 2025-2026.</li>
+</ul><hr></div>
+</div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.1" id="colombiapi-031">ColombiAPI 0.3.1<a class="anchor" aria-label="anchor" href="#colombiapi-031"></a></h2><p class="text-muted">CRAN release: 2025-10-12</p>
 <div class="section level3">
 <h3 id="bug-fixes-0-3-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-1"></a></h3>
 <div class="section level4">
@@ -49,7 +101,7 @@
 <li>Added explicit <code>NULL</code> checks before structure validation to prevent test failures</li>
 <li>Enhanced robustness of API error handling with better <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> implementation</li>
 </ul></li>
-</ul></div>
+</ul><hr></div>
 </div>
 </div>
     <div class="section level2">
@@ -60,18 +112,30 @@
 <p>These additions cover diverse domains such as <strong>indigenous languages, education, biodiversity, digital transformation, mobility, tourism, connectivity, and economic projections</strong>.</p>
 <div class="section level4">
 <h4 id="newly-added-datasets-0-3-0">Newly Added Datasets<a class="anchor" aria-label="anchor" href="#newly-added-datasets-0-3-0"></a></h4>
-<ul><li><p><code>indigenous_vocabulary_df</code>: Comparative Vocabulary for Colombia’s Indigenous Languages</p></li>
-<li><p><code>admitted_students_df</code>: Admitted Students to the Science Faculty, UNAL (2013-I)</p></li>
-<li><p><code>school_levels_df</code>: Departments by Levels of Schools in Colombia</p></li>
-<li><p><code>dead_lianas_df</code>: Mortality of lianas (vines) in tropical forests</p></li>
-<li><p><code>municipalities_tbl_df</code>: Municipalities of Colombia</p></li>
-<li><p><code>Bucaramanga_wifi_tbl_df</code>: WiFi Connectivity Zones in Bucaramanga</p></li>
-<li><p><code>Cartagena_wifi_tbl_df</code>: Connected Devices in WiFi Zones of Cartagena</p></li>
-<li><p><code>digital_graduates_tbl_df</code>: “Advancing in Digital” Program Graduates</p></li>
-<li><p><code>vehicle_count_tbl_df</code>: Vehicle Count: Cars and Motorcycles</p></li>
-<li><p><code>foreign_visitors_tbl_df</code>: Non-Resident Foreign Visitors to Colombia</p></li>
-<li><p><code>digital_centers_tbl_df</code>: Digital Centers in Sucre</p></li>
-<li><p><code>gdp_departments_tbl_df</code>: Departmental GDP Projection</p></li>
+<ul><li>
+<code>indigenous_vocabulary_df</code>: Comparative Vocabulary for Colombia’s Indigenous Languages</li>
+<li>
+<code>admitted_students_df</code>: Admitted Students to the Science Faculty, UNAL (2013-I)</li>
+<li>
+<code>school_levels_df</code>: Departments by Levels of Schools in Colombia</li>
+<li>
+<code>dead_lianas_df</code>: Mortality of lianas (vines) in tropical forests</li>
+<li>
+<code>municipalities_tbl_df</code>: Municipalities of Colombia</li>
+<li>
+<code>Bucaramanga_wifi_tbl_df</code>: WiFi Connectivity Zones in Bucaramanga</li>
+<li>
+<code>Cartagena_wifi_tbl_df</code>: Connected Devices in WiFi Zones of Cartagena</li>
+<li>
+<code>digital_graduates_tbl_df</code>: “Advancing in Digital” Program Graduates</li>
+<li>
+<code>vehicle_count_tbl_df</code>: Vehicle Count: Cars and Motorcycles</li>
+<li>
+<code>foreign_visitors_tbl_df</code>: Non-Resident Foreign Visitors to Colombia</li>
+<li>
+<code>digital_centers_tbl_df</code>: Digital Centers in Sucre</li>
+<li>
+<code>gdp_departments_tbl_df</code>: Departmental GDP Projection</li>
 </ul><hr></div>
 </div>
 </div>
@@ -86,31 +150,45 @@
 <li><p><code>get_departments_list()</code> was renamed to <code><a href="../reference/get_colombia_departments.html">get_colombia_departments()</a></code> to avoid naming conflicts with other packages and improve function identification.</p></li>
 <li><p><code>get_presidents_list()</code> was renamed to <code><a href="../reference/get_colombia_presidents.html">get_colombia_presidents()</a></code> to avoid naming conflicts with other packages and improve function identification.</p></li>
 <li><p><code>get_regions_list()</code> was renamed to <code><a href="../reference/get_colombia_regions.html">get_colombia_regions()</a></code> to avoid naming conflicts with other packages and improve function identification.</p></li>
-</ul><p>The following APIs were added to the <code>ColombiAPI</code> package:</p>
-<ul><li><p><strong>Nager.Date</strong> <a href="https://date.nager.at/Api" class="external-link uri">https://date.nager.at/Api</a>.</p></li>
-<li><p><strong>World Bank API</strong> <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392" class="external-link uri">https://datahelpdesk.worldbank.org/knowledgebase/articles/889392</a></p></li>
-<li><p><strong>REST Countries API</strong> <a href="https://restcountries.com/" class="external-link uri">https://restcountries.com/</a></p></li>
-</ul><p>The following functions were added to the <code>ColombiAPI</code> package powered by API-Colombia:</p>
-<ul><li><p><code><a href="../reference/get_colombia_cities.html">get_colombia_cities()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_attractions.html">get_colombia_attractions()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_natural_areas.html">get_colombia_natural_areas()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_invasive_species.html">get_colombia_invasive_species()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_native_communities.html">get_colombia_native_communities()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_radios.html">get_colombia_radios()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_typical_dishes.html">get_colombia_typical_dishes()</a></code></p></li>
-</ul><p>The following function was added to the <code>ColombiAPI</code> package powered by <code>Nager.Date</code>:</p>
+</ul><div class="section level4">
+<h4 id="new-apis-added-0-2-0">New APIs added<a class="anchor" aria-label="anchor" href="#new-apis-added-0-2-0"></a></h4>
+<ul><li>
+<strong>Nager.Date</strong> <a href="https://date.nager.at/Api" class="external-link uri">https://date.nager.at/Api</a>
+</li>
+<li>
+<strong>World Bank API</strong> <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392" class="external-link uri">https://datahelpdesk.worldbank.org/knowledgebase/articles/889392</a>
+</li>
+<li>
+<strong>REST Countries API</strong> <a href="https://restcountries.com/" class="external-link uri">https://restcountries.com/</a>
+</li>
+</ul></div>
+<div class="section level4">
+<h4 id="new-functions--api-colombia-0-2-0">New functions — API Colombia<a class="anchor" aria-label="anchor" href="#new-functions--api-colombia-0-2-0"></a></h4>
+<ul><li><code><a href="../reference/get_colombia_cities.html">get_colombia_cities()</a></code></li>
+<li><code><a href="../reference/get_colombia_attractions.html">get_colombia_attractions()</a></code></li>
+<li><code><a href="../reference/get_colombia_natural_areas.html">get_colombia_natural_areas()</a></code></li>
+<li><code><a href="../reference/get_colombia_invasive_species.html">get_colombia_invasive_species()</a></code></li>
+<li><code><a href="../reference/get_colombia_native_communities.html">get_colombia_native_communities()</a></code></li>
+<li><code><a href="../reference/get_colombia_radios.html">get_colombia_radios()</a></code></li>
+<li><code><a href="../reference/get_colombia_typical_dishes.html">get_colombia_typical_dishes()</a></code></li>
+</ul></div>
+<div class="section level4">
+<h4 id="new-function--nagerdate-0-2-0">New function — Nager.Date<a class="anchor" aria-label="anchor" href="#new-function--nagerdate-0-2-0"></a></h4>
 <ul><li><code><a href="../reference/get_colombia_holidays.html">get_colombia_holidays()</a></code></li>
-</ul><p>The following functions were added to the <code>ColombiAPI</code> package powered by <code>World Bank API</code>:</p>
-<ul><li><p><code><a href="../reference/get_colombia_child_mortality.html">get_colombia_child_mortality()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_cpi.html">get_colombia_cpi()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_energy_use.html">get_colombia_energy_use()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_gdp.html">get_colombia_gdp()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_hospital_beds.html">get_colombia_hospital_beds()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_life_expectancy.html">get_colombia_life_expectancy()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_literacy_rate.html">get_colombia_literacy_rate()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_population.html">get_colombia_population()</a></code></p></li>
-<li><p><code><a href="../reference/get_colombia_unemployment.html">get_colombia_unemployment()</a></code></p></li>
+</ul></div>
+<div class="section level4">
+<h4 id="new-functions--world-bank-api-0-2-0">New functions — World Bank API<a class="anchor" aria-label="anchor" href="#new-functions--world-bank-api-0-2-0"></a></h4>
+<ul><li><code><a href="../reference/get_colombia_child_mortality.html">get_colombia_child_mortality()</a></code></li>
+<li><code><a href="../reference/get_colombia_cpi.html">get_colombia_cpi()</a></code></li>
+<li><code><a href="../reference/get_colombia_energy_use.html">get_colombia_energy_use()</a></code></li>
+<li><code><a href="../reference/get_colombia_gdp.html">get_colombia_gdp()</a></code></li>
+<li><code><a href="../reference/get_colombia_hospital_beds.html">get_colombia_hospital_beds()</a></code></li>
+<li><code><a href="../reference/get_colombia_life_expectancy.html">get_colombia_life_expectancy()</a></code></li>
+<li><code><a href="../reference/get_colombia_literacy_rate.html">get_colombia_literacy_rate()</a></code></li>
+<li><code><a href="../reference/get_colombia_population.html">get_colombia_population()</a></code></li>
+<li><code><a href="../reference/get_colombia_unemployment.html">get_colombia_unemployment()</a></code></li>
 </ul><hr></div>
+</div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="colombiapi-011">ColombiAPI 0.1.1<a class="anchor" aria-label="anchor" href="#colombiapi-011"></a></h2><p class="text-muted">CRAN release: 2025-02-16</p>

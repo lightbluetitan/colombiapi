@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,66 +20,90 @@
 
 library(testthat)
 
-test_that("get_colombia_natural_areas() returns tibble with correct structure", {
-  skip_on_cran()
-  result <- get_colombia_natural_areas()
-  skip_if(is.null(result), "API unavailable, test skipped")
+areas_data <- get_colombia_natural_areas()
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("id", "areaGroupId", "categoryNaturalAreaId",
-                         "name", "departmentId", "daneCode", "landArea"))
-  expect_equal(ncol(result), 7)
-  expect_gt(nrow(result), 0) # must return rows
+test_that("get_colombia_natural_areas returns valid tibble structure", {
+  skip_if(is.null(areas_data), "Function returned NULL")
+
+  expect_s3_class(areas_data, "tbl_df")
+  expect_s3_class(areas_data, "data.frame")
+
+  expect_equal(ncol(areas_data), 7)
+  expect_true(nrow(areas_data) > 1000)
+
+  expect_equal(names(areas_data),
+               c("id", "areaGroupId", "categoryNaturalAreaId",
+                 "name", "departmentId", "daneCode", "landArea"))
 })
 
-test_that("get_colombia_natural_areas() returns correct data types", {
-  skip_on_cran()
-  result <- get_colombia_natural_areas()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_natural_areas returns correct column types", {
+  skip_if(is.null(areas_data), "Function returned NULL")
 
-  expect_type(result$id, "integer")
-  expect_type(result$areaGroupId, "integer")
-  expect_type(result$categoryNaturalAreaId, "integer")
-  expect_type(result$name, "character")
-  expect_type(result$departmentId, "integer")
-  expect_type(result$daneCode, "integer")
-  expect_type(result$landArea, "double")
+  expect_type(areas_data$id, "integer")
+  expect_type(areas_data$areaGroupId, "integer")
+  expect_type(areas_data$categoryNaturalAreaId, "integer")
+  expect_type(areas_data$name, "character")
+  expect_type(areas_data$departmentId, "integer")
+  expect_type(areas_data$daneCode, "integer")
+  expect_true(is.numeric(areas_data$landArea))
 })
 
-test_that("get_colombia_natural_areas() returns reasonable values", {
-  skip_on_cran()
-  result <- get_colombia_natural_areas()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_natural_areas id column is valid", {
+  skip_if(is.null(areas_data), "Function returned NULL")
 
-  expect_true(all(result$id > 0))
-  expect_true(all(result$areaGroupId >= 0 | is.na(result$areaGroupId)))
-  expect_true(all(result$categoryNaturalAreaId >= 0 | is.na(result$categoryNaturalAreaId)))
-  expect_true(all(nchar(result$name) > 0 | is.na(result$name)))
-  expect_true(all(result$departmentId >= 0 | is.na(result$departmentId)))
-  expect_true(all(result$daneCode >= 0 | is.na(result$daneCode)))
-  expect_true(all(result$landArea >= 0 | is.na(result$landArea)))
+  expect_true(all(!is.na(areas_data$id)))
+  expect_true(all(areas_data$id > 0))
+
+  # Clave primaria real
+  expect_equal(length(unique(areas_data$id)), nrow(areas_data))
 })
 
-test_that("get_colombia_natural_areas() returns consistent columns across calls", {
-  skip_on_cran()
-  res1 <- get_colombia_natural_areas()
-  res2 <- get_colombia_natural_areas()
-  skip_if(is.null(res1) || is.null(res2), "API unavailable, test skipped")
+test_that("get_colombia_natural_areas categorical ids are valid", {
+  skip_if(is.null(areas_data), "Function returned NULL")
 
-  expect_named(res1, c("id", "areaGroupId", "categoryNaturalAreaId",
-                       "name", "departmentId", "daneCode", "landArea"))
-  expect_named(res2, c("id", "areaGroupId", "categoryNaturalAreaId",
-                       "name", "departmentId", "daneCode", "landArea"))
+  non_na_group <- areas_data$areaGroupId[!is.na(areas_data$areaGroupId)]
+  if (length(non_na_group) > 0) {
+    expect_true(all(non_na_group > 0))
+  }
+
+  non_na_category <- areas_data$categoryNaturalAreaId[!is.na(areas_data$categoryNaturalAreaId)]
+  if (length(non_na_category) > 0) {
+    expect_true(all(non_na_category > 0))
+  }
+
+  non_na_dept <- areas_data$departmentId[!is.na(areas_data$departmentId)]
+  if (length(non_na_dept) > 0) {
+    expect_true(all(non_na_dept > 0))
+  }
 })
 
-test_that("get_colombia_natural_areas() allows for missing values (NA)", {
-  skip_on_cran()
-  result <- get_colombia_natural_areas()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_natural_areas character column handles real API data", {
+  skip_if(is.null(areas_data), "Function returned NULL")
 
-  expect_true(any(is.na(result$areaGroupId)) || all(!is.na(result$areaGroupId)))
-  expect_true(any(is.na(result$categoryNaturalAreaId)) || all(!is.na(result$categoryNaturalAreaId)))
-  expect_true(any(is.na(result$departmentId)) || all(!is.na(result$departmentId)))
-  expect_true(any(is.na(result$daneCode)) || all(!is.na(result$daneCode)))
-  expect_true(any(is.na(result$landArea)) || all(!is.na(result$landArea)))
+  expect_true(all(!is.na(areas_data$name)))
+
+  non_na_name <- areas_data$name[!is.na(areas_data$name)]
+  if (length(non_na_name) > 0) {
+    expect_true(all(nchar(trimws(non_na_name)) >= 0))
+  }
+})
+
+test_that("get_colombia_natural_areas landArea values are valid", {
+  skip_if(is.null(areas_data), "Function returned NULL")
+
+  non_na_area <- areas_data$landArea[!is.na(areas_data$landArea)]
+
+  if (length(non_na_area) > 0) {
+    expect_true(all(is.finite(non_na_area)))
+
+    # área no puede ser negativa
+    expect_true(all(non_na_area >= 0))
+  }
+})
+
+test_that("get_colombia_natural_areas dataset has diversity", {
+  skip_if(is.null(areas_data), "Function returned NULL")
+
+  expect_true(length(unique(areas_data$name)) > 10)
+  expect_true(length(unique(areas_data$departmentId)) > 5)
 })

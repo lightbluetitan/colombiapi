@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,37 +49,49 @@
 #'
 #' @seealso \code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[dplyr]{as_tibble}}
 #'
-#' @importFrom httr GET content
+#' @importFrom httr GET timeout status_code content
 #' @importFrom jsonlite fromJSON
 #' @importFrom dplyr as_tibble
 #'
 #' @export
 get_colombia_presidents <- function() {
   url <- "https://api-colombia.com/api/v1/President"
-
-  res <- httr::GET(url)
-
-  if (res$status_code != 200) {
-    message(paste("Error: status", res$status_code))
+  res <- tryCatch(
+    httr::GET(url, httr::timeout(10)),
+    error = function(e) {
+      message("API Colombia request failed: ", e$message)
+      return(NULL)
+    }
+  )
+  if (is.null(res)) {
     return(NULL)
   }
-
-  content <- jsonlite::fromJSON(httr::content(res, "text", encoding = "UTF-8"))
-
-  if (length(content) == 0 || is.null(content)) {
+  if (httr::status_code(res) != 200) {
+    message("API Colombia returned status: ", httr::status_code(res))
+    return(NULL)
+  }
+  txt <- tryCatch(
+    httr::content(res, as = "text", encoding = "UTF-8"),
+    error = function(e) return(NULL)
+  )
+  if (is.null(txt)) {
+    return(NULL)
+  }
+  content <- tryCatch(
+    jsonlite::fromJSON(txt),
+    error = function(e) return(NULL)
+  )
+  if (is.null(content) || length(content) == 0) {
     message("No data returned from the API Colombia service.")
     return(NULL)
   }
-
-  df <- dplyr::as_tibble(data.frame(
-    id = content$id,
-    name = content$name,
-    last_name = content$lastName,
-    political_party = content$politicalParty,
+  dplyr::as_tibble(data.frame(
+    id                = content$id,
+    name              = content$name,
+    last_name         = content$lastName,
+    political_party   = content$politicalParty,
     start_period_date = content$startPeriodDate,
-    end_period_date = content$endPeriodDate,
-    stringsAsFactors = FALSE
+    end_period_date   = content$endPeriodDate,
+    stringsAsFactors  = FALSE
   ))
-
-  return(df)
 }

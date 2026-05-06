@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,131 +20,70 @@
 
 library(testthat)
 
-test_that("get_colombia_literacy_rate() returns a tibble with correct structure and types", {
-  skip_on_cran()
+literacy_data <- get_colombia_literacy_rate()
 
-  result <- get_colombia_literacy_rate()
+test_that("get_colombia_literacy_rate returns valid tibble structure", {
+  skip_if(is.null(literacy_data), "Function returned NULL")
 
-  # Check that the result is not NULL
-  expect_false(is.null(result))
+  expect_s3_class(literacy_data, "tbl_df")
+  expect_s3_class(literacy_data, "data.frame")
 
-  # Check that the result is a data.frame/tibble
-  expect_s3_class(result, "data.frame")
+  expect_equal(ncol(literacy_data), 4)
+  expect_equal(nrow(literacy_data), 13)
 
-  # Check that the column names are exactly as expected
-  expect_named(result, c("indicator", "country", "year", "value"))
-
-  # Check that there are exactly 4 columns
-  expect_equal(ncol(result), 4)
-
-  # Check data types of each column
-  expect_type(result$indicator, "character")
-  expect_type(result$country, "character")
-  expect_type(result$year, "integer")
-
-  # Value column should be numeric (API returns decimal percentages)
-  expect_true(is.numeric(result$value))
+  expect_equal(names(literacy_data),
+               c("indicator", "country", "year", "value"))
 })
 
-test_that("get_colombia_literacy_rate() returns data only for Colombia", {
-  skip_on_cran()
+test_that("get_colombia_literacy_rate returns correct column types", {
+  skip_if(is.null(literacy_data), "Function returned NULL")
 
-  result <- get_colombia_literacy_rate()
-  expect_true(all(result$country == "Colombia"))
+  expect_type(literacy_data$indicator, "character")
+  expect_type(literacy_data$country, "character")
+  expect_type(literacy_data$year, "integer")
+  expect_true(is.numeric(literacy_data$value))
 })
 
-test_that("get_colombia_literacy_rate() returns correct indicator label", {
-  skip_on_cran()
+test_that("get_colombia_literacy_rate returns correct indicator and country", {
+  skip_if(is.null(literacy_data), "Function returned NULL")
 
-  result <- get_colombia_literacy_rate()
-  expect_true(all(result$indicator == "Literacy rate, adult total (% of people ages 15 and above)"))
+  expect_true(all(!is.na(literacy_data$indicator)))
+  expect_true(all(!is.na(literacy_data$country)))
+
+  expect_true(all(
+    literacy_data$indicator ==
+      "Literacy rate, adult total (% of people ages 15 and above)"
+  ))
+
+  expect_true(all(literacy_data$country == "Colombia"))
 })
 
-test_that("get_colombia_literacy_rate() returns data for years 2010 to 2022", {
-  skip_on_cran()
+test_that("get_colombia_literacy_rate year column is complete and valid", {
+  skip_if(is.null(literacy_data), "Function returned NULL")
 
-  result <- get_colombia_literacy_rate()
-  expect_true(all(result$year %in% 2010:2022))
-  expect_equal(sort(unique(result$year)), 2010:2022)
+  expect_equal(sort(literacy_data$year), 2010:2022)
+  expect_equal(length(unique(literacy_data$year)), 13)
 })
 
-test_that("get_colombia_literacy_rate() returns exactly 13 rows (2010–2022 inclusive)", {
-  skip_on_cran()
+test_that("get_colombia_literacy_rate value column handles NA and valid range", {
+  skip_if(is.null(literacy_data), "Function returned NULL")
 
-  result <- get_colombia_literacy_rate()
-  expect_equal(nrow(result), 13)
-})
+  # Puede haber NA (API real)
+  expect_true(any(is.na(literacy_data$value)))
 
-test_that("get_colombia_literacy_rate() year column has no NA values", {
-  skip_on_cran()
-
-  result <- get_colombia_literacy_rate()
-  expect_false(any(is.na(result$year)))
-})
-
-test_that("get_colombia_literacy_rate() value column allows NA values", {
-  skip_on_cran()
-
-  result <- get_colombia_literacy_rate()
-  expect_true(all(is.finite(result$value) | is.na(result$value)))
-  expect_true(any(is.na(result$value)) || all(!is.na(result$value)))
-})
-
-test_that("get_colombia_literacy_rate() years are sorted in descending order", {
-  skip_on_cran()
-
-  result <- get_colombia_literacy_rate()
-  expect_equal(result$year, sort(result$year, decreasing = TRUE))
-})
-
-test_that("get_colombia_literacy_rate() indicator and country are consistent across rows", {
-  skip_on_cran()
-
-  result <- get_colombia_literacy_rate()
-  expect_equal(length(unique(result$indicator)), 1)
-  expect_equal(length(unique(result$country)), 1)
-})
-
-test_that("get_colombia_literacy_rate() non-NA values are within valid percentage range", {
-  skip_on_cran()
-
-  result <- get_colombia_literacy_rate()
-  non_na_values <- result$value[!is.na(result$value)]
+  non_na_values <- literacy_data$value[!is.na(literacy_data$value)]
 
   if (length(non_na_values) > 0) {
+    expect_true(all(is.finite(non_na_values)))
+
+    # Validación de dominio (porcentaje)
     expect_true(all(non_na_values >= 0))
     expect_true(all(non_na_values <= 100))
   }
 })
 
-test_that("get_colombia_literacy_rate() value column is numeric", {
-  skip_on_cran()
+test_that("get_colombia_literacy_rate returns no duplicate rows", {
+  skip_if(is.null(literacy_data), "Function returned NULL")
 
-  result <- get_colombia_literacy_rate()
-
-  # Value should be numeric (double) since it contains decimal percentages
-  expect_true(is.numeric(result$value))
-})
-
-test_that("get_colombia_literacy_rate() handles API errors gracefully", {
-  skip_on_cran()
-
-  # This test verifies the function returns NULL on API failure
-  # Note: This is a behavioral test, actual API errors are hard to simulate
-  result <- get_colombia_literacy_rate()
-
-  # At minimum, result should be NULL or a valid tibble
-  expect_true(is.null(result) || is.data.frame(result))
-})
-
-test_that("get_colombia_literacy_rate() returns consistent data types", {
-  skip_on_cran()
-
-  result <- get_colombia_literacy_rate()
-
-  # Verify all columns have consistent types throughout
-  expect_true(all(sapply(result$indicator, is.character)))
-  expect_true(all(sapply(result$country, is.character)))
-  expect_true(all(sapply(result$year, is.integer)))
-  expect_true(all(sapply(result$value, function(x) is.numeric(x) || is.na(x))))
+  expect_equal(nrow(literacy_data), nrow(unique(literacy_data)))
 })

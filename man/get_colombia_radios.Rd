@@ -2,21 +2,41 @@
 % Please edit documentation in R/get_colombia_radios.R
 \name{get_colombia_radios}
 \alias{get_colombia_radios}
-\title{Get Radios of Colombia}
+\title{Get Radios of Colombia from API Colombia}
+\source{
+API Colombia: \url{https://api-colombia.com/api/v1/Radio}
+}
 \usage{
 get_colombia_radios()
 }
 \value{
-A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.
+A tibble with the following columns:
+\itemize{
+  \item \code{id}: Radio station identifier (integer)
+  \item \code{name}: Radio station name (character)
+  \item \code{frequency}: Broadcast frequency (numeric)
+  \item \code{band}: Frequency band (e.g., AM, FM) (character)
+}
+Returns \code{NULL} if the API request fails.
 }
 \description{
 Retrieves information about radio stations in Colombia from the API Colombia.
 This function fetches only the following fields: id, name, frequency, and band.
 }
+\details{
+This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
+}
+\note{
+Requires internet connection.
+}
 \examples{
-\donttest{
-radios <- get_colombia_radios()
-print(radios)
+if (interactive()) {
+  get_colombia_radios()
 }
 
+}
+\seealso{
+\code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
 }

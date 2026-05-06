@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,75 +19,62 @@
 
 library(testthat)
 
-test_that("get_colombia_energy_use() returns a tibble with correct structure and types", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
+energy_data <- get_colombia_energy_use()
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("indicator", "country", "year", "value"))
-  expect_equal(ncol(result), 4)
-  expect_type(result$indicator, "character")
-  expect_type(result$country, "character")
-  expect_type(result$year, "integer")
-  expect_type(result$value, "double")
-  expect_gt(nrow(result), 0)
+test_that("get_colombia_energy_use returns valid tibble structure", {
+  skip_if(is.null(energy_data), "Function returned NULL")
+
+  expect_s3_class(energy_data, "tbl_df")
+  expect_s3_class(energy_data, "data.frame")
+
+  expect_equal(ncol(energy_data), 4)
+  expect_equal(nrow(energy_data), 13)
+
+  expect_equal(names(energy_data), c("indicator", "country", "year", "value"))
 })
 
-test_that("get_colombia_energy_use() returns correct indicator and country", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_energy_use returns correct column types", {
+  skip_if(is.null(energy_data), "Function returned NULL")
 
-  expect_true(all(result$indicator == "Energy use (kg of oil equivalent per capita)"))
-  expect_true(all(result$country == "Colombia"))
+  expect_type(energy_data$indicator, "character")
+  expect_type(energy_data$country, "character")
+  expect_type(energy_data$year, "integer")
+  expect_true(is.numeric(energy_data$value))
 })
 
-test_that("get_colombia_energy_use() returns years 2010 to 2022", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_energy_use returns correct indicator and country", {
+  skip_if(is.null(energy_data), "Function returned NULL")
 
-  expect_true(all(result$year %in% 2010:2022))
+  expect_true(all(!is.na(energy_data$indicator)))
+  expect_true(all(!is.na(energy_data$country)))
+
+  expect_true(all(
+    energy_data$indicator == "Energy use (kg of oil equivalent per capita)"
+  ))
+
+  expect_true(all(energy_data$country == "Colombia"))
 })
 
-test_that("get_colombia_energy_use() returns 13 rows (2010–2022)", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_energy_use year column is complete and valid", {
+  skip_if(is.null(energy_data), "Function returned NULL")
 
-  expect_equal(nrow(result), 13)
+  expect_equal(sort(energy_data$year), 2010:2022)
+  expect_equal(length(unique(energy_data$year)), 13)
 })
 
-test_that("get_colombia_energy_use() allows for NA values in value column", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_energy_use value column has valid values", {
+  skip_if(is.null(energy_data), "Function returned NULL")
 
-  expect_true(any(is.na(result$value)) || all(!is.na(result$value)))
+  non_na_values <- energy_data$value[!is.na(energy_data$value)]
+
+  if (length(non_na_values) > 0) {
+    expect_true(all(non_na_values > 0))
+    expect_true(all(is.finite(non_na_values)))
+  }
 })
 
-test_that("get_colombia_energy_use() years are sorted in descending order", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_energy_use returns no duplicate rows", {
+  skip_if(is.null(energy_data), "Function returned NULL")
 
-  expect_equal(result$year, sort(result$year, decreasing = TRUE))
-})
-
-test_that("get_colombia_energy_use() value column is numeric or NA", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_true(all(is.finite(result$value) | is.na(result$value)))
-})
-
-test_that("get_colombia_energy_use() indicator and country are consistent across rows", {
-  skip_on_cran()
-  result <- get_colombia_energy_use()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_equal(length(unique(result$indicator)), 1)
-  expect_equal(length(unique(result$country)), 1)
+  expect_equal(nrow(energy_data), nrow(unique(energy_data)))
 })

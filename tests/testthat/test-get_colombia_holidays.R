@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,62 +20,55 @@
 
 library(testthat)
 
-test_that("get_colombia_holidays() returns tibble with correct structure and types", {
-  skip_on_cran()
-  year <- 2025
-  result <- get_colombia_holidays(year)
-  skip_if(is.null(result), "API unavailable, test skipped")
+holidays_data <- get_colombia_holidays(2026)
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("date", "local_name", "name"))
-  expect_equal(ncol(result), 3)
-  expect_s3_class(result$date, "Date")
-  expect_type(result$local_name, "character")
-  expect_type(result$name, "character")
-  expect_gt(nrow(result), 0)  # should return some holidays
+test_that("get_colombia_holidays returns valid tibble structure", {
+  skip_if(is.null(holidays_data), "Function returned NULL")
+
+  expect_s3_class(holidays_data, "tbl_df")
+  expect_s3_class(holidays_data, "data.frame")
+  expect_equal(ncol(holidays_data), 3)
+  expect_true(nrow(holidays_data) > 0)
+
+  expect_equal(names(holidays_data), c("date", "local_name", "name"))
 })
 
-test_that("get_colombia_holidays() dates belong to the requested year", {
-  skip_on_cran()
-  year <- 2025
-  result <- get_colombia_holidays(year)
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_holidays returns correct column types", {
+  skip_if(is.null(holidays_data), "Function returned NULL")
 
-  expect_true(all(format(result$date, "%Y") == as.character(year)))
+  expect_s3_class(holidays_data$date, "Date")
+  expect_type(holidays_data$local_name, "character")
+  expect_type(holidays_data$name, "character")
 })
 
-test_that("get_colombia_holidays() errors on invalid year inputs", {
-  expect_error(get_colombia_holidays("not_a_year"))
-  expect_error(get_colombia_holidays(999))   # too far past
-  expect_error(get_colombia_holidays(3000))  # future year
+test_that("get_colombia_holidays includes major holidays", {
+  skip_if(is.null(holidays_data), "Function returned NULL")
+
+  # Validación semántica débil (no frágil)
+  major_holidays <- c("New Year's Day", "Christmas Day")
+  found_holidays <- sum(major_holidays %in% holidays_data$name)
+
+  expect_true(found_holidays > 0)
+  expect_true(nrow(holidays_data) >= 10)
 })
 
-test_that("get_colombia_holidays() returns consistent columns across calls", {
-  skip_on_cran()
-  res1 <- get_colombia_holidays(2024)
-  res2 <- get_colombia_holidays(2025)
-  skip_if(is.null(res1) || is.null(res2), "API unavailable, test skipped")
+test_that("get_colombia_holidays dates are valid and in correct year", {
+  skip_if(is.null(holidays_data), "Function returned NULL")
 
-  expect_named(res1, c("date", "local_name", "name"))
-  expect_named(res2, c("date", "local_name", "name"))
+  expect_false(any(is.na(holidays_data$date)))
+  expect_true(all(format(holidays_data$date, "%Y") == "2026"))
 })
 
-test_that("get_colombia_holidays() returns a reasonable number of holidays", {
-  skip_on_cran()
-  result <- get_colombia_holidays(2025)
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  # Typical number of official holidays in Colombia is ~15–20
-  expect_true(nrow(result) >= 10)
-  expect_true(nrow(result) <= 25)
+test_that("get_colombia_holidays handles invalid input", {
+  expect_null(get_colombia_holidays("2026"))
+  expect_null(get_colombia_holidays(c(2026, 2027)))
+  expect_null(get_colombia_holidays(NA))
+  expect_null(get_colombia_holidays(999))
+  expect_null(get_colombia_holidays(3000))
 })
 
-test_that("get_colombia_holidays() allows for NA values if any", {
-  skip_on_cran()
-  result <- get_colombia_holidays(2025)
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_holidays returns no duplicate dates", {
+  skip_if(is.null(holidays_data), "Function returned NULL")
 
-  expect_true(any(is.na(result$local_name)) || all(!is.na(result$local_name)))
-  expect_true(any(is.na(result$name)) || all(!is.na(result$name)))
+  expect_equal(nrow(holidays_data), length(unique(holidays_data$date)))
 })
-

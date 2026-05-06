@@ -3,21 +3,44 @@
 \name{get_colombia_invasive_species}
 \alias{get_colombia_invasive_species}
 \title{Get Invasive Species of Colombia}
+\source{
+API Colombia: \url{https://api-colombia.com/api/v1/InvasiveSpecie}
+}
 \usage{
 get_colombia_invasive_species()
 }
 \value{
-A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.
+A tibble with the following columns:
+\itemize{
+  \item \code{id}: Species identifier (integer)
+  \item \code{name}: Species common name (character)
+  \item \code{scientificName}: Scientific name of the species (character)
+  \item \code{commonNames}: List of common names (list)
+  \item \code{impact}: Description of ecological impact (character)
+  \item \code{manage}: Management recommendations (character)
+  \item \code{riskLevel}: Risk level classification (character)
+}
+Returns \code{NULL} if the API request fails.
 }
 \description{
 Retrieves information about invasive species in Colombia from the API Colombia.
 This function fetches only selected fields: id, name, scientificName,
 commonNames, impact, manage, and riskLevel.
 }
+\details{
+This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
+}
+\note{
+Requires internet connection.
+}
 \examples{
-\donttest{
-invasive_species <- get_colombia_invasive_species()
-print(invasive_species)
+if (interactive()) {
+  get_colombia_invasive_species()
 }
 
+}
+\seealso{
+\code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
 }

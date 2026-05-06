@@ -1,6 +1,6 @@
 # ColombiAPI - Access Colombian Data via APIs and Curated Datasets
-# Version 0.3.1
-# Copyright (C) 2025 Renzo Caceres Rossi
+# Version 0.3.2
+# Copyright (C) 2025-2026 Renzo Caceres Rossi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,87 +19,80 @@
 
 library(testthat)
 
-test_that("get_colombia_gdp() returns a tibble with correct structure and types", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
+gdp_data <- get_colombia_gdp()
 
-  expect_s3_class(result, "tbl_df")
-  expect_named(result, c("indicator", "country", "year", "value", "value_label"))
-  expect_equal(ncol(result), 5)
-  expect_type(result$indicator, "character")
-  expect_type(result$country, "character")
-  expect_type(result$year, "integer")
-  expect_type(result$value, "double")
-  expect_type(result$value_label, "character")
-  expect_gt(nrow(result), 0)
+test_that("get_colombia_gdp returns valid tibble structure", {
+  skip_if(is.null(gdp_data), "Function returned NULL")
+
+  expect_s3_class(gdp_data, "tbl_df")
+  expect_s3_class(gdp_data, "data.frame")
+
+  expect_equal(ncol(gdp_data), 5)
+  expect_equal(nrow(gdp_data), 13)
+
+  expect_equal(names(gdp_data),
+               c("indicator", "country", "year", "value", "value_label"))
 })
 
-test_that("get_colombia_gdp() returns correct indicator and country", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_gdp returns correct column types", {
+  skip_if(is.null(gdp_data), "Function returned NULL")
 
-  expect_true(all(result$indicator == "GDP (current US$)"))
-  expect_true(all(result$country == "Colombia"))
+  expect_type(gdp_data$indicator, "character")
+  expect_type(gdp_data$country, "character")
+  expect_type(gdp_data$year, "integer")
+  expect_true(is.numeric(gdp_data$value))
+  expect_type(gdp_data$value_label, "character")
 })
 
-test_that("get_colombia_gdp() returns years 2010 to 2022", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_gdp returns correct indicator and country", {
+  skip_if(is.null(gdp_data), "Function returned NULL")
 
-  expect_true(all(result$year %in% 2010:2022))
+  expect_true(all(!is.na(gdp_data$indicator)))
+  expect_true(all(!is.na(gdp_data$country)))
+
+  expect_true(all(gdp_data$indicator == "GDP (current US$)"))
+  expect_true(all(gdp_data$country == "Colombia"))
 })
 
-test_that("get_colombia_gdp() returns 13 rows (2010–2022)", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_gdp year column is complete and valid", {
+  skip_if(is.null(gdp_data), "Function returned NULL")
 
-  expect_equal(nrow(result), 13)
+  expect_equal(sort(gdp_data$year), 2010:2022)
+  expect_equal(length(unique(gdp_data$year)), 13)
 })
 
-test_that("get_colombia_gdp() allows for NA values in value column", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_gdp value column has valid values", {
+  skip_if(is.null(gdp_data), "Function returned NULL")
 
-  expect_true(any(is.na(result$value)) || all(!is.na(result$value)))
+  non_na_values <- gdp_data$value[!is.na(gdp_data$value)]
+
+  if (length(non_na_values) > 0) {
+    expect_true(all(non_na_values > 0))
+    expect_true(all(is.finite(non_na_values)))
+  }
 })
 
-test_that("get_colombia_gdp() years are sorted in descending order", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_gdp value_label integrity", {
+  skip_if(is.null(gdp_data), "Function returned NULL")
 
-  expect_equal(result$year, sort(result$year, decreasing = TRUE))
+  # misma longitud
+  expect_equal(length(gdp_data$value_label), nrow(gdp_data))
+
+  # donde value existe, debe haber label
+  idx <- which(!is.na(gdp_data$value))
+  if (length(idx) > 0) {
+    expect_true(all(!is.na(gdp_data$value_label[idx])))
+  }
+
+  # formato básico: solo números y comas
+  non_na_labels <- gdp_data$value_label[!is.na(gdp_data$value_label)]
+  if (length(non_na_labels) > 0) {
+    expect_true(all(grepl("^[0-9,]+$", non_na_labels)))
+  }
 })
 
-test_that("get_colombia_gdp() value column is numeric or NA", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
+test_that("get_colombia_gdp returns no duplicate rows", {
+  skip_if(is.null(gdp_data), "Function returned NULL")
 
-  expect_true(all(is.finite(result$value) | is.na(result$value)))
+  expect_equal(nrow(gdp_data), nrow(unique(gdp_data)))
 })
-
-test_that("get_colombia_gdp() value_label matches formatted value", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  formatted <- scales::comma(result$value, accuracy = 1)
-  expect_equal(result$value_label, formatted)
-})
-
-test_that("get_colombia_gdp() indicator and country are consistent across rows", {
-  skip_on_cran()
-  result <- get_colombia_gdp()
-  skip_if(is.null(result), "API unavailable, test skipped")
-
-  expect_equal(length(unique(result$indicator)), 1)
-  expect_equal(length(unique(result$country)), 1)
-})
-
-

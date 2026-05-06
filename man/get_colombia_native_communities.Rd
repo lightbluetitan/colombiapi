@@ -3,20 +3,40 @@
 \name{get_colombia_native_communities}
 \alias{get_colombia_native_communities}
 \title{Get Native Communities of Colombia}
+\source{
+API Colombia: \url{https://api-colombia.com/api/v1/NativeCommunity}
+}
 \usage{
 get_colombia_native_communities()
 }
 \value{
-A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.
+A tibble with the following columns:
+\itemize{
+  \item \code{id}: Community identifier (integer)
+  \item \code{name}: Community name (character)
+  \item \code{description}: Community description (character)
+  \item \code{languages}: Languages spoken by the community (list)
+}
+Returns \code{NULL} if the API request fails.
 }
 \description{
 Retrieves information about Colombia's native communities from the API Colombia.
 This function fetches only selected fields: id, name, description, and languages.
 }
+\details{
+This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
+}
+\note{
+Requires internet connection.
+}
 \examples{
-\donttest{
-native_communities <- get_colombia_native_communities()
-print(native_communities)
+if (interactive()) {
+  get_colombia_native_communities()
 }
 
+}
+\seealso{
+\code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
 }

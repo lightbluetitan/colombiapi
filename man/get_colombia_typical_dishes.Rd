@@ -2,21 +2,40 @@
 % Please edit documentation in R/get_colombia_typical_dishes.R
 \name{get_colombia_typical_dishes}
 \alias{get_colombia_typical_dishes}
-\title{Get Typical Dishes of Colombia}
+\title{Get Typical Dishes of Colombia from API Colombia}
+\source{
+API Colombia: \url{https://api-colombia.com/api/v1/TypicalDish}
+}
 \usage{
 get_colombia_typical_dishes()
 }
 \value{
-A tibble with multiple rows and the selected columns, or NULL if the API is unavailable.
+A tibble with the following columns:
+\itemize{
+  \item \code{id}: Dish identifier (integer)
+  \item \code{name}: Dish name (character)
+  \item \code{description}: Dish description (character)
+}
+Returns \code{NULL} if the API request fails.
 }
 \description{
 Retrieves information about Colombia's typical dishes from the API Colombia.
-This function fetches only selected fields: id, name, description, and region.
+This function fetches only selected fields: id, name, and description.
+}
+\details{
+This function sends a GET request to the API Colombia service.
+If the API request fails or returns an error status code,
+the function returns \code{NULL} with an informative message.
+}
+\note{
+Requires internet connection.
 }
 \examples{
-\donttest{
-dishes <- get_colombia_typical_dishes()
-print(dishes)
+if (interactive()) {
+  get_colombia_typical_dishes()
 }
 
+}
+\seealso{
+\code{\link[httr]{GET}}, \code{\link[jsonlite]{fromJSON}}, \code{\link[tibble]{tibble}}
 }

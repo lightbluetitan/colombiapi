@@ -47,7 +47,7 @@ Below is a list of the main functions included in the package:
 
 - `get_colombia_energy_use()`: Get Colombia's Energy Use (kg of oil equivalent per capita) from World Bank.
 
-- `get_colombia_gdp function()`: Get Colombia's GDP (current US$) from World Bank.
+- `get_colombia_gdp()`: Get Colombia's GDP (current US$) from World Bank.
 
 - `get_colombia_holidays()`: Get official public holidays in Colombia for a given year, e.g., `get_colombia_holidays(2025)`.
 
