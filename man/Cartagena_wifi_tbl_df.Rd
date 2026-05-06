@@ -17,7 +17,7 @@ A tibble with 468 observations and 8 variables:
 }
 }
 \source{
-Data obtained from GOV.CO Datos Abiertos: \url{https://www.datos.gov.co/Ciencia-Tecnolog-a-e-Innovaci-n/Dispositivos-conectados-en-las-zonas-wifi-del-dist/94zk-4tpe/about_data}
+Data obtained from GOV.CO Datos Abiertos: \url{https://www.datos.gov.co}
 }
 \usage{
 data(Cartagena_wifi_tbl_df)

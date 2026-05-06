@@ -532,12 +532,11 @@ NULL
 #'   \item{TABLET}{Number of connected tablets (numeric)}
 #'   \item{PC}{Number of connected PCs (numeric)}
 #' }
-#' @source Data obtained from GOV.CO Datos Abiertos: \url{https://www.datos.gov.co/Ciencia-Tecnolog-a-e-Innovaci-n/Dispositivos-conectados-en-las-zonas-wifi-del-dist/94zk-4tpe/about_data}
+#' @source Data obtained from GOV.CO Datos Abiertos: \url{https://www.datos.gov.co}
 #' @usage data(Cartagena_wifi_tbl_df)
 #' @export
 load("data/Cartagena_wifi_tbl_df.rda")
 NULL
-
 
 
 #' "Advancing in Digital" Program Graduates (Spanish speaking)
