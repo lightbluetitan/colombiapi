@@ -7,6 +7,6 @@ bibentry(
     comment = c(ORCID = "0009-0005-0744-854X")
   ),
   year = 2026,
-  note = "R package version 0.3.2",
+  note = "R package version 0.4.0",
   url = "https://github.com/lightbluetitan/colombiapi"
 )

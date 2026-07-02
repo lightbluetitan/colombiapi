@@ -90,3 +90,6 @@ All datasets in this package are provided under the same licenses as their origi
 
 This package, `ColombiAPI`, is licensed under the GPL-3 License.
  
+## Copyright Notice
+
+© 2025-2026 Renzo Caceres Rossi. All rights reserved under the GPL-3.

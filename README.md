@@ -4,7 +4,7 @@
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/ColombiAPI)](https://cran.r-project.org/package=ColombiAPI)
 [![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/ColombiAPI)](https://cran.r-project.org/package=ColombiAPI)
 
-The `ColombiAPI` package provides a comprehensive interface to access diverse public data about **Colombia** through multiple APIs and curated datasets. The package integrates four different APIs: **API-Colombia** for Colombian-specific data including geography, culture, tourism, and government information; **World Bank API** for economic and demographic indicators; **Nager.Date API** for public holidays; and **REST Countries API** for general country information. This allows users to retrieve up-to-date or historical information on topics such as geographic locations, cultural attractions, economic indicators, demographic data, and public holidays.
+The `ColombiAPI` package provides a comprehensive interface to access diverse public data about **Colombia** through multiple APIs and curated datasets. The package integrates three different APIs: **API-Colombia** for Colombian-specific data including geography, culture, tourism, and government information; **World Bank API** for economic and demographic indicators; and **Nager.Date API** for public holidays. This allows users to retrieve up-to-date or historical information on topics such as geographic locations, cultural attractions, economic indicators, demographic data, and public holidays.
 
 In addition to API-access functions, the package includes curated datasets covering a wide range of topics, including **Bogota** air stations, business and holiday dates, public schools, Colombian coffee exports, cannabis licenses, **Medellin** rainfall, malls in **Bogota**, indigenous languages, student admissions and school statistics, forest liana mortality, municipal and regional data, connectivity and digital infrastructure, program graduates, vehicle counts, international visitors, and GDP projections. These datasets provide a rich and multifaceted view of Colombian social, economic, environmental, and technological information.
 
@@ -75,8 +75,6 @@ Below is a list of the main functions included in the package:
 
 - `get_colombia_unemployment()`: Get Colombia's Unemployment Rate (Total) from World Bank.
 
-- `get_country_info_co()`: Get Country Information for Colombia from restcountries.
-
 - `view_datasets_ColombiAPI()`: View available curated datasets included in ColombiAPI.
 
 
@@ -112,10 +110,6 @@ library(ColombiAPI)
 # List colombian presidents
 
 get_colombia_presidents()
-
-# Shows Colombia's general information 
-
-get_country_info_co()
 
 # Load a dataset
 
