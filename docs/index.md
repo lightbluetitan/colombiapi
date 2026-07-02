@@ -1,12 +1,5 @@
 # ColombiAPI
 
-[![License: GPL
-v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![CRAN
-downloads](https://cranlogs.r-pkg.org/badges/ColombiAPI)](https://cran.r-project.org/package=ColombiAPI)
-[![CRAN total
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/ColombiAPI)](https://cran.r-project.org/package=ColombiAPI)
-
 The `ColombiAPI` package provides a comprehensive interface to access
 diverse public data about **Colombia** through multiple APIs and curated
 datasets. The package integrates three different APIs: **API-Colombia**

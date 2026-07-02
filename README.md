@@ -1,9 +1,5 @@
 # ColombiAPI
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![CRAN downloads](https://cranlogs.r-pkg.org/badges/ColombiAPI)](https://cran.r-project.org/package=ColombiAPI)
-[![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/ColombiAPI)](https://cran.r-project.org/package=ColombiAPI)
-
 The `ColombiAPI` package provides a comprehensive interface to access diverse public data about **Colombia** through multiple APIs and curated datasets. The package integrates three different APIs: **API-Colombia** for Colombian-specific data including geography, culture, tourism, and government information; **World Bank API** for economic and demographic indicators; and **Nager.Date API** for public holidays. This allows users to retrieve up-to-date or historical information on topics such as geographic locations, cultural attractions, economic indicators, demographic data, and public holidays.
 
 In addition to API-access functions, the package includes curated datasets covering a wide range of topics, including **Bogota** air stations, business and holiday dates, public schools, Colombian coffee exports, cannabis licenses, **Medellin** rainfall, malls in **Bogota**, indigenous languages, student admissions and school statistics, forest liana mortality, municipal and regional data, connectivity and digital infrastructure, program graduates, vehicle counts, international visitors, and GDP projections. These datasets provide a rich and multifaceted view of Colombian social, economic, environmental, and technological information.
